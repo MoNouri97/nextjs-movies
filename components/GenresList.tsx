@@ -9,15 +9,21 @@ const fetchGenres = async () => {
 	return res.json();
 };
 
-export const GenresList = () => {
+export const GenresList = ({ onChange, active }) => {
 	const { data, status } = useQuery('genres', fetchGenres);
-	console.log(data);
-
 	return (
 		<div className='genres'>
 			{status === 'success' &&
 				data.genres.map(genre => {
-					return <span key={genre.id}>{genre.name}</span>;
+					return (
+						<span
+							key={genre.id}
+							onClick={() => onChange(genre)}
+							className={active == genre.id ? 'active' : ''}
+						>
+							{genre.name}
+						</span>
+					);
 				})}
 		</div>
 	);
