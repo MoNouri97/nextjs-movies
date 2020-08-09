@@ -4,6 +4,7 @@ import { useQuery, usePaginatedQuery } from 'react-query';
 import { useState } from 'react';
 import Card from '../components/Card';
 import { GenresList } from '../components/GenresList';
+import Filters from '../components/Filters';
 
 const config = {
 	API_KEY: '5c36791d98d96dc9af65af5475e4d14e',
@@ -36,6 +37,7 @@ interface Genre {
 export default function Home() {
 	const [page, setPage] = useState(1);
 	const [genre, setGenre] = useState<Genre>({ id: '', name: '' });
+	const [rating, setRating] = useState('10');
 	const { resolvedData, latestData, status } = usePaginatedQuery(
 		['movies', page, genre.id],
 		fetchMovies,
@@ -68,6 +70,7 @@ export default function Home() {
 			<main className={styles.main}>
 				<h1 className={styles.title}>Welcome to Movies</h1>
 				<GenresList onChange={handleGenreChange} active={genre.id} />
+				<Filters {...{ rating, setRating }} />
 				<p className={styles.description}>{`${
 					genre.name ? genre.name : 'Popular'
 				} Movies`}</p>
@@ -89,16 +92,7 @@ export default function Home() {
 				</div>
 			</main>
 
-			<footer className={styles.footer}>
-				<a
-					href='https://vercel.com?utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app'
-					target='_blank'
-					rel='noopener noreferrer'
-				>
-					Powered by{' '}
-					<img src='/vercel.svg' alt='Vercel Logo' className={styles.logo} />
-				</a>
-			</footer>
+			<footer className={styles.footer}>Browse Movies</footer>
 		</div>
 	);
 }
