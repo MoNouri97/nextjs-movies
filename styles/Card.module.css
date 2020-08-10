@@ -19,13 +19,13 @@
 }
 .post-entry:hover .rating {
 	opacity: 0.7;
+	transform: translateY(0);
 }
 .rating {
 	z-index: 3;
 	position: absolute;
 	background: var(--dark);
 	color: var(--tiffany-blue);
-
 	padding: 1rem;
 	font-size: 5rem;
 	top: 0;
@@ -35,6 +35,7 @@
 	text-align: center;
 	padding-top: 100px;
 	opacity: 0;
+	transform: translateY(50px);
 	transition: all 0.2s ease-in-out;
 }
 .rating small {
