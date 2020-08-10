@@ -5,10 +5,8 @@ import { useState } from 'react';
 import Card from '../components/Card';
 import { GenresList } from '../components/GenresList';
 import Filters from '../components/Filters';
-
-const config = {
-	API_KEY: '5c36791d98d96dc9af65af5475e4d14e',
-};
+import Pagination from '../components/Pagination';
+import { config } from '../config';
 
 // &with_genres=16
 const endpoint = `https://api.themoviedb.org/3/discover/movie?api_key=${config.API_KEY}&language=en-US&sort_by=popularity.desc&include_adult=false&include_video=false&`;
@@ -75,13 +73,7 @@ export default function Home() {
 				<p className={styles.description}>{`${
 					genre.name ? genre.name : 'Popular'
 				} Movies`}</p>
-				<div>
-					<button onClick={handlePrevious} disabled={page == 1}>
-						Previous
-					</button>
-					<span> -{page}- </span>
-					<button onClick={handleNext}>next</button>
-				</div>
+				<Pagination {...{ handleNext, handlePrevious, page }} />
 
 				<div className='grid'>
 					{resolvedData != latestData && (
@@ -96,6 +88,7 @@ export default function Home() {
 							return <Card key={i} movie={movie} />;
 						})}
 				</div>
+				<Pagination {...{ handleNext, handlePrevious, page }} />
 			</main>
 
 			<footer className={styles.footer}>Browse Movies</footer>
