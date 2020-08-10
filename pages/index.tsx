@@ -13,9 +13,10 @@ const config = {
 // &with_genres=16
 const endpoint = `https://api.themoviedb.org/3/discover/movie?api_key=${config.API_KEY}&language=en-US&sort_by=popularity.desc&include_adult=false&include_video=false&`;
 
-const fetchMovies = async (__key, page, genre) => {
+const fetchMovies = async (__key, page, genre, minR) => {
 	let info = '';
-	if (genre) info = '&with_genres=' + genre;
+	if (genre) info += '&with_genres=' + genre;
+	if (minR) info += '&vote_average.gte=' + minR;
 	const res = await fetch(`${endpoint}&page=${page}${info}`);
 	return res.json();
 };
@@ -36,10 +37,10 @@ interface Genre {
 }
 export default function Home() {
 	const [page, setPage] = useState(1);
-	const [genre, setGenre] = useState<Genre>({ id: '', name: '' });
-	const [rating, setRating] = useState('10');
+	const [genre, setGenre] = useState<Genre>({ id: '16', name: 'Animation' });
+	const [rating, setRating] = useState('5');
 	const { resolvedData, latestData, status } = usePaginatedQuery(
-		['movies', page, genre.id],
+		['movies', page, genre.id, rating],
 		fetchMovies,
 	);
 	let results = [];
@@ -78,11 +79,16 @@ export default function Home() {
 					<button onClick={handlePrevious} disabled={page == 1}>
 						Previous
 					</button>
-					<span>{page}</span>
+					<span> -{page}- </span>
 					<button onClick={handleNext}>next</button>
 				</div>
 
 				<div className='grid'>
+					{resolvedData != latestData && (
+						<div className='loading'>
+							<span></span>
+						</div>
+					)}
 					{resolvedData &&
 						results.map((movie, i) => {
 							const { id, title, poster_path } = movie;

@@ -15,6 +15,30 @@
 	height: calc(300px * var(--scale));
 	overflow: hidden;
 	display: block;
+	position: relative;
+}
+.post-entry:hover .rating {
+	opacity: 0.7;
+}
+.rating {
+	z-index: 3;
+	position: absolute;
+	background: var(--dark);
+	color: var(--tiffany-blue);
+
+	padding: 1rem;
+	font-size: 5rem;
+	top: 0;
+	bottom: 0;
+	left: 0;
+	right: 0;
+	text-align: center;
+	padding-top: 100px;
+	opacity: 0;
+	transition: all 0.2s ease-in-out;
+}
+.rating small {
+	font-size: 1rem;
 }
 .post-entry > a > img {
 	width: 200px;
@@ -32,6 +56,9 @@
 	height: 100%;
 	text-align: center;
 	padding-top: 50%;
+}
+.blurred {
+	filter: blur(50px);
 }
 .post-text {
 	padding: 7px;

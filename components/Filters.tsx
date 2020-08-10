@@ -12,8 +12,9 @@ const Filters: React.FC<Prop> = ({ rating, setRating }) => {
 			<p>Minimum Rating : </p>
 			{ratings.map((r, i) => (
 				<span
-					onClick={() => setRating(r)}
-					className={parseInt(r) < parseInt(rating) ? 'disabled' : ''}
+					key={i}
+					onClick={() => setRating(r.charAt(0))}
+					className={parseInt(r) < parseInt(rating) * 10 ? 'disabled' : ''}
 				>
 					{r}
 				</span>
