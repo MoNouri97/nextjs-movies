@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import Link from 'next/link';
 import styles from '../styles/Card.module.css';
 interface Props {
@@ -9,15 +9,14 @@ const Card = ({ movie }) => {
 	if (!movie) return <div></div>;
 
 	const [loading, setLoading] = useState(true);
+	const imgRef = useRef<HTMLImageElement>();
+	const handleLoad = () => setLoading(false);
 	useEffect(() => {
 		setLoading(true);
-
-		const t = setTimeout(() => {
-			setLoading(false);
-		}, 10000);
+		imgRef?.current.addEventListener('load', handleLoad);
 
 		return () => {
-			clearTimeout(t);
+			imgRef?.current.removeEventListener('load', handleLoad);
 		};
 	}, [movie]);
 
@@ -29,7 +28,7 @@ const Card = ({ movie }) => {
 						<img
 							src={`https://image.tmdb.org/t/p/w200/${movie.poster_path}`}
 							style={{ filter: loading ? 'blur(50px)' : '' }}
-							onLoad={e => setLoading(false)}
+							ref={imgRef}
 						/>
 					)}
 					{!movie.poster_path && (
