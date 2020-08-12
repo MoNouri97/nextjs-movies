@@ -13,10 +13,10 @@ const Card = ({ movie }) => {
 	const handleLoad = () => setLoading(false);
 	useEffect(() => {
 		setLoading(true);
-		imgRef?.current.addEventListener('load', handleLoad);
+		imgRef?.current?.addEventListener('load', handleLoad);
 
 		return () => {
-			imgRef?.current.removeEventListener('load', handleLoad);
+			imgRef.current?.removeEventListener('load', handleLoad);
 		};
 	}, [movie]);
 
