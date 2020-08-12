@@ -10,13 +10,19 @@ const Card = ({ movie }) => {
 
 	const [loading, setLoading] = useState(true);
 	useEffect(() => {
-		console.log('loading');
-
 		setLoading(true);
+
+		const t = setTimeout(() => {
+			setLoading(false);
+		}, 10000);
+
+		return () => {
+			clearTimeout(t);
+		};
 	}, [movie]);
 
 	return (
-		<Link href='/movie/[id]' as={`/movie/${movie.id}`}>
+		<Link href={`/?movie=${movie.id}`} as={`/movie/${movie.id}`} scroll={false}>
 			<div className={styles['post-entry']}>
 				<a>
 					{movie.poster_path && (
@@ -37,7 +43,7 @@ const Card = ({ movie }) => {
 				<div className={styles['post-text']}>
 					<span className={styles['post-meta']}>{movie.release_date}</span>
 					<h3>
-						<a href='#'>{movie.title}</a>
+						<a>{movie.title}</a>
 					</h3>
 				</div>
 			</div>

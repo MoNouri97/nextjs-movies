@@ -1,5 +1,6 @@
 .post-entry {
 	border-radius: 20px;
+	cursor: pointer;
 	overflow: hidden;
 	border: 1px solid rgb(238, 238, 238);
 	background: #fff;
@@ -22,7 +23,6 @@
 	transform: translateY(0);
 }
 .rating {
-	z-index: 3;
 	position: absolute;
 	background: var(--dark);
 	color: var(--tiffany-blue);

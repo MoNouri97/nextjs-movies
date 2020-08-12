@@ -1,14 +1,17 @@
 import Head from 'next/head';
 import styles from '../styles/Home.module.css';
-import { useQuery, usePaginatedQuery } from 'react-query';
+import { usePaginatedQuery } from 'react-query';
 import { useState } from 'react';
+import Modal from 'react-modal';
+import { useRouter } from 'next/router';
 import Card from '../components/Card';
 import { GenresList } from '../components/GenresList';
 import Filters from '../components/Filters';
 import Pagination from '../components/Pagination';
 import { config } from '../config';
+import MovieInfo from '../components/MovieInfo';
 
-// &with_genres=16
+Modal.setAppElement('#__next');
 const endpoint = `https://api.themoviedb.org/3/discover/movie?api_key=${config.API_KEY}&language=en-US&sort_by=popularity.desc&include_adult=false&include_video=false&`;
 
 const fetchMovies = async (__key, page, genre, minR) => {
@@ -19,16 +22,6 @@ const fetchMovies = async (__key, page, genre, minR) => {
 	return res.json();
 };
 
-// export async function getServerSideProps() {
-// 	// const data = await fetchMovies();
-
-// 	// return {
-// 	// 	props: {
-// 	// 		data,
-// 	// 	},
-// 	// };
-// 	return { props: {} };
-// }
 interface Genre {
 	name: string;
 	id: string;
@@ -50,6 +43,10 @@ export default function Home() {
 		setGenre(genre);
 		setPage(1);
 	};
+	const handleRatingChange = (rating: string) => {
+		setRating(rating);
+		setPage(1);
+	};
 	const handleNext = () => {
 		setPage(current => current + 1);
 	};
@@ -59,6 +56,7 @@ export default function Home() {
 		}
 		setPage(current => current - 1);
 	};
+	const router = useRouter();
 	return (
 		<div className={styles.container}>
 			<Head>
@@ -69,7 +67,7 @@ export default function Home() {
 			<main className={styles.main}>
 				<h1 className={styles.title}>Welcome to Movies</h1>
 				<GenresList onChange={handleGenreChange} active={genre.id} />
-				<Filters {...{ rating, setRating }} />
+				<Filters rating={rating} onChange={handleRatingChange} />
 				<p className={styles.description}>{`${
 					genre.name ? genre.name : 'Popular'
 				} Movies`}</p>
@@ -82,14 +80,31 @@ export default function Home() {
 						</div>
 					)}
 					{resolvedData &&
-						results.map((movie, i) => {
-							const { id, title, poster_path } = movie;
-
-							return <Card key={i} movie={movie} />;
-						})}
+						results.map((movie, i) => <Card key={i} movie={movie} />)}
 				</div>
 				<Pagination {...{ handleNext, handlePrevious, page }} />
 			</main>
+			<Modal
+				isOpen={!!router.query.movie}
+				onRequestClose={() => router.push('/')}
+				shouldCloseOnOverlayClick={true}
+				style={{
+					overlay: {
+						backgroundColor: 'rgba(0, 0, 0, 0.75)',
+					},
+					content: {
+						top: '20px',
+						left: '50px',
+						right: '50px',
+						bottom: '0px',
+						background: 'none',
+						border: 'none',
+						padding: '0',
+					},
+				}}
+			>
+				<MovieInfo />
+			</Modal>
 
 			<footer className={styles.footer}>Browse Movies</footer>
 		</div>
