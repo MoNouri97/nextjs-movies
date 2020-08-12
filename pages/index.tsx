@@ -1,7 +1,7 @@
 import Head from 'next/head';
 import styles from '../styles/Home.module.css';
 import { usePaginatedQuery } from 'react-query';
-import { useState } from 'react';
+import { useState, useRef } from 'react';
 import Modal from 'react-modal';
 import { useRouter } from 'next/router';
 import Card from '../components/Card';
@@ -28,6 +28,7 @@ interface Genre {
 }
 export default function Home() {
 	const [page, setPage] = useState(1);
+	const totalPages = useRef(500);
 	const [genre, setGenre] = useState<Genre>({ id: '16', name: 'Animation' });
 	const [rating, setRating] = useState('5');
 	const { resolvedData, latestData, status } = usePaginatedQuery(
@@ -38,6 +39,7 @@ export default function Home() {
 
 	if (status === 'success') {
 		results = resolvedData.results;
+		totalPages.current = resolvedData.total_pages;
 	}
 	const handleGenreChange = (genre: Genre) => {
 		setGenre(genre);
@@ -48,6 +50,9 @@ export default function Home() {
 		setPage(1);
 	};
 	const handleNext = () => {
+		if (page == resolvedData.total_pages) {
+			return;
+		}
 		setPage(current => current + 1);
 	};
 	const handlePrevious = () => {
@@ -71,7 +76,10 @@ export default function Home() {
 				<p className={styles.description}>{`${
 					genre.name ? genre.name : 'Popular'
 				} Movies`}</p>
-				<Pagination {...{ handleNext, handlePrevious, page }} />
+				<Pagination
+					{...{ handleNext, handlePrevious, page }}
+					totalPages={totalPages.current}
+				/>
 
 				<div className='grid'>
 					{resolvedData != latestData && (
@@ -82,12 +90,17 @@ export default function Home() {
 					{resolvedData &&
 						results.map((movie, i) => <Card key={i} movie={movie} />)}
 				</div>
-				<Pagination {...{ handleNext, handlePrevious, page }} />
+				<hr />
+				<Pagination
+					{...{ handleNext, handlePrevious, page }}
+					totalPages={totalPages.current}
+				/>
 			</main>
 			<Modal
 				isOpen={!!router.query.movie}
 				onRequestClose={() => router.push('/')}
 				shouldCloseOnOverlayClick={true}
+				shouldFocusAfterRender={true}
 				style={{
 					overlay: {
 						backgroundColor: 'rgba(0, 0, 0, 0.75)',
