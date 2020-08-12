@@ -84,8 +84,9 @@
 	font-weight: 500;
 }
 .info .desc span {
-	font-size: 0.8rem !important;
-	font-weight: 500 !important;
+	text-align: justify;
+	font-size: 1rem;
+	font-weight: 500;
 }
 .info .title {
 	text-transform: uppercase;
