@@ -140,7 +140,7 @@ button:disabled {
 }
 .ReactModal__Overlay {
 	opacity: 0;
-	transition: opacity 0.5s ease-in-out;
+	transition: all 0.5s ease-in-out;
 }
 
 .ReactModal__Overlay--after-open {
@@ -149,4 +149,14 @@ button:disabled {
 
 .ReactModal__Overlay--before-close {
 	opacity: 0;
+}
+.ReactModal__Content {
+	opacity: 0;
+	scale: 0.8;
+	transition: all 0.5s cubic-bezier(0.68, -0.55, 0.27, 1.55);
+}
+
+.ReactModal__Content--after-open {
+	scale: 1;
+	opacity: 1;
 }
