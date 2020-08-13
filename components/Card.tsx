@@ -13,23 +13,26 @@ const Card = ({ movie }) => {
 	const handleLoad = () => setLoading(false);
 	useEffect(() => {
 		setLoading(true);
-		imgRef?.current?.addEventListener('load', handleLoad);
+		if (imgRef.current) {
+			imgRef.current.addEventListener('load', handleLoad);
+			imgRef.current.src = `https://image.tmdb.org/t/p/w200/${movie.poster_path}`;
+		}
 
 		return () => {
 			imgRef.current?.removeEventListener('load', handleLoad);
 		};
-	}, [movie]);
+	}, [movie, setLoading]);
 
 	return (
 		<Link href={`/?movie=${movie.id}`} as={`/movie/${movie.id}`} scroll={false}>
 			<div className={styles['post-entry']}>
 				<a>
 					{movie.poster_path && (
-						<img
-							src={`https://image.tmdb.org/t/p/w200/${movie.poster_path}`}
-							style={{ filter: loading ? 'blur(50px)' : '' }}
-							ref={imgRef}
-						/>
+						<>
+							<img ref={imgRef} />
+
+							{loading && <div className='loading_img'></div>}
+						</>
 					)}
 					{!movie.poster_path && (
 						<div className={styles['noimage']}>no poster available</div>

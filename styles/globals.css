@@ -102,7 +102,17 @@ button:hover {
 button:disabled {
 	box-shadow: none;
 }
-
+.loading_img {
+	position: absolute;
+	top: 0;
+	width: 100%;
+	height: 100%;
+	background-color: #fcfffa;
+	background-image: -webkit-linear-gradient(45deg, #fcfffa 0%, #2ec2b3 100%);
+	background-image: -moz-linear-gradient(45deg, #fcfffa 0%, #2ec2b3 100%);
+	background-image: -o-linear-gradient(45deg, #fcfffa 0%, #2ec2b3 100%);
+	background-image: linear-gradient(45deg, #fcfffa 0%, #2ec2b3 100%);
+}
 .loading {
 	position: absolute;
 	top: 0;

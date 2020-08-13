@@ -87,10 +87,12 @@
 	text-align: justify;
 	font-size: 1rem;
 	font-weight: 500;
+	max-height: 100px;
+	overflow: auto;
 }
 .info .title {
 	text-transform: uppercase;
-	font-family: 'Lato';
+	font-family: 'Lato', 'Helvetica Neue', sans-serif;
 	font-size: 2rem;
 	color: var(--dark);
 	font-weight: 900;

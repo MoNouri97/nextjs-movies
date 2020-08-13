@@ -58,9 +58,6 @@
 	text-align: center;
 	padding-top: 50%;
 }
-.blurred {
-	filter: blur(50px);
-}
 .post-text {
 	padding: 7px;
 }
