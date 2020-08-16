@@ -1,16 +1,13 @@
 import React from 'react';
 import { useQuery } from 'react-query';
 
-const fetchGenres = async () => {
-	const res = await fetch(
-		'https://api.themoviedb.org/3/genre/movie/' +
-			'list?api_key=5c36791d98d96dc9af65af5475e4d14e&language=en-US',
-	);
+const fetchGenres = async (__key, endpoint) => {
+	const res = await fetch(endpoint);
 	return res.json();
 };
 
-export const GenresList = ({ onChange, active }) => {
-	const { data, status } = useQuery('genres', fetchGenres);
+export const GenresList = ({ endpoint, onChange, active }) => {
+	const { data, status } = useQuery(['genres', endpoint], fetchGenres);
 	return (
 		<div className='genres'>
 			{status === 'success' &&

@@ -1,6 +1,5 @@
 import React, { useEffect } from 'react';
 import styles from '../styles/movie.id.module.css';
-import { config } from '../config';
 import { useQuery } from 'react-query';
 import { useRouter } from 'next/router';
 
@@ -22,17 +21,20 @@ type Movie = {
 interface Props {
 	movie?: Movie;
 }
-async function fetchMovie(__key, query) {
+async function fetchMovie(__key, query, apiKey) {
 	const id = query.id ? query.id : query.movie;
-	const endpoint = ` https://api.themoviedb.org/3/movie/${id}?api_key=${config.API_KEY}&language=en-US`;
+	const endpoint = ` https://api.themoviedb.org/3/movie/${id}?api_key=${apiKey}&language=en-US`;
 	const movie = await fetch(endpoint);
 
 	return movie.json();
 }
-const MovieInfo = () => {
+const MovieInfo = ({ apiKey }) => {
 	const router = useRouter();
 
-	const { data, status } = useQuery(['movie', router.query], fetchMovie);
+	const { data, status } = useQuery(
+		['movie', router.query, apiKey],
+		fetchMovie,
+	);
 	const movie = data;
 	if (!movie) return <h1>loading...</h1>;
 	return (

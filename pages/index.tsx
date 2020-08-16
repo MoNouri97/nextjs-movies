@@ -8,31 +8,40 @@ import Card from '../components/Card';
 import { GenresList } from '../components/GenresList';
 import Filters from '../components/Filters';
 import Pagination from '../components/Pagination';
-import { config } from '../config';
 import MovieInfo from '../components/MovieInfo';
 
 Modal.setAppElement('#__next');
-const endpoint = `https://api.themoviedb.org/3/discover/movie?api_key=${config.API_KEY}&language=en-US&sort_by=popularity.desc&include_adult=false&include_video=false&`;
-
-const fetchMovies = async (__key, page, genre, minR) => {
+const fetchMovies = async (__key, endpoint, page, genre, minR) => {
 	let info = '';
 	if (genre) info += '&with_genres=' + genre;
 	if (minR) info += '&vote_average.gte=' + minR;
 	const res = await fetch(`${endpoint}&page=${page}${info}`);
 	return res.json();
 };
+export async function getStaticProps() {
+	const endpoint = `https://api.themoviedb.org/3/discover/movie?api_key=${process.env.API_KEY}&language=en-US&sort_by=popularity.desc&include_adult=false&include_video=false&`;
+	const endpointForGenres = `https://api.themoviedb.org/3/genre/movie/list?api_key=${process.env.API_KEY}&language=en-US`;
+
+	return {
+		props: {
+			endpoint,
+			endpointForGenres,
+			apiKey: process.env.API_KEY,
+		},
+	};
+}
 
 interface Genre {
 	name: string;
 	id: string;
 }
-export default function Home() {
+export default function Home({ endpoint, endpointForGenres, apiKey }) {
 	const [page, setPage] = useState(1);
 	const totalPages = useRef(500);
 	const [genre, setGenre] = useState<Genre>({ id: '16', name: 'Animation' });
 	const [rating, setRating] = useState('5');
 	const { resolvedData, latestData, status } = usePaginatedQuery(
-		['movies', page, genre.id, rating],
+		['movies', endpoint, page, genre.id, rating],
 		fetchMovies,
 	);
 	let results = [];
@@ -71,7 +80,11 @@ export default function Home() {
 
 			<main className={styles.main}>
 				<h1 className={styles.title}>Welcome to Movies</h1>
-				<GenresList onChange={handleGenreChange} active={genre.id} />
+				<GenresList
+					endpoint={endpointForGenres}
+					onChange={handleGenreChange}
+					active={genre.id}
+				/>
 				<Filters rating={rating} onChange={handleRatingChange} />
 				<p className={styles.description}>{`${
 					genre.name ? genre.name : 'Popular'
@@ -116,7 +129,7 @@ export default function Home() {
 					},
 				}}
 			>
-				<MovieInfo />
+				<MovieInfo apiKey={apiKey} />
 			</Modal>
 
 			<footer className={styles.footer}>Browse Movies</footer>

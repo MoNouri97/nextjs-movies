@@ -1,18 +1,17 @@
 import React, { useState, useEffect } from 'react';
 import Head from 'next/head';
 import styles from '../../../styles/movie.id.module.css';
-import { config } from '../../../config';
 import MovieInfo from '../../../components/MovieInfo';
 
 export async function getServerSideProps({ query }) {
 	const { id } = query;
-	const endpoint = ` https://api.themoviedb.org/3/movie/${id}?api_key=${config.API_KEY}&language=en-US`;
+	const endpoint = ` https://api.themoviedb.org/3/movie/${id}?api_key=${process.env.API_KEY}&language=en-US`;
 	const movie = await (await fetch(endpoint)).json();
 
-	return { props: { movie } };
+	return { props: { movie, apiKey: process.env.API_KEY } };
 }
 
-const index = ({ movie }) => {
+const index = ({ movie, apiKey }) => {
 	return (
 		<div className='container'>
 			<Head>
@@ -26,7 +25,7 @@ const index = ({ movie }) => {
 				}}
 			>
 				<>
-					<MovieInfo />
+					<MovieInfo apiKey={apiKey} />
 				</>
 			</div>
 		</div>
