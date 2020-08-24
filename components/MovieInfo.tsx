@@ -56,9 +56,8 @@ const MovieInfo = ({ apiKey }) => {
 				<div className={styles.genres + ' ' + styles.wide}>
 					genres list
 					<ul>
-						{movie.genres.map(g => (
-							<li key={g.id}>{g.name}</li>
-						))}
+						{movie.genres &&
+							movie.genres.map(g => <li key={g.id}>{g.name}</li>)}
 					</ul>
 				</div>
 				<div className={styles.release}>
