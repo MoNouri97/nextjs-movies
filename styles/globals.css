@@ -45,6 +45,9 @@ a {
 	width: 80%;
 	text-align: center;
 }
+.genre {
+	margin: 3px !important;
+}
 .genres span {
 	background: var(--tiffany-blue);
 	/* background: rgb(219, 219, 219); */
