@@ -6,7 +6,7 @@ import Modal from 'react-modal';
 import { useRouter } from 'next/router';
 import Card from '../components/Card';
 import { GenresList } from '../components/GenresList';
-import Filters from '../components/Filters';
+import RatingFilter from '../components/RatingFilter';
 import Pagination from '../components/Pagination';
 import MovieInfo from '../components/MovieInfo';
 
@@ -85,7 +85,7 @@ export default function Home({ endpoint, endpointForGenres, apiKey }) {
 					onChange={handleGenreChange}
 					active={genre.id}
 				/>
-				<Filters rating={rating} onChange={handleRatingChange} />
+				<RatingFilter rating={rating} onChange={handleRatingChange} />
 				<p className={styles.description}>{`${
 					genre.name ? genre.name : 'Popular'
 				} Movies`}</p>
