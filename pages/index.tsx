@@ -9,6 +9,7 @@ import { GenresList } from '../components/GenresList';
 import RatingFilter from '../components/RatingFilter';
 import Pagination from '../components/Pagination';
 import MovieInfo from '../components/MovieInfo';
+import SortBy from '../components/SortBy';
 
 Modal.setAppElement('#__next');
 const fetchMovies = async (__key, endpoint, page, genre, minR) => {
@@ -85,10 +86,13 @@ export default function Home({ endpoint, endpointForGenres, apiKey }) {
 					onChange={handleGenreChange}
 					active={genre.id}
 				/>
-				<RatingFilter rating={rating} onChange={handleRatingChange} />
-				<p className={styles.description}>{`${
-					genre.name ? genre.name : 'Popular'
-				} Movies`}</p>
+				<div className='filters'>
+					<RatingFilter rating={rating} onChange={handleRatingChange} />
+					<SortBy />
+				</div>
+				<p className={styles.description}>
+					{`${genre.name ? genre.name : 'Popular'} Movies`}
+				</p>
 				<Pagination
 					{...{ handleNext, handlePrevious, page }}
 					totalPages={totalPages.current}

@@ -48,46 +48,17 @@ a {
 .genre {
 	margin: 3px !important;
 }
-.genres span {
-	background: var(--tiffany-blue);
-	/* background: rgb(219, 219, 219); */
-	color: var(--light);
-	cursor: pointer;
-	padding: 10px;
-	border-radius: 10px;
-	margin: 3px;
-	display: inline-block;
-	border: 0px;
-	transition: 0.3s all ease-out;
+.filters {
+	margin-bottom: 1rem;
+	margin-top: 1rem;
+	width: 100%;
+	display: flex;
+	flex-direction: row;
+	align-items: flex-end;
+	justify-content: space-around;
 }
-.genres span.active {
-	background: var(--dark);
-	color: var(--light);
-}
-.ratings span {
-	background: var(--tiffany-blue);
-	color: var(--light);
-	cursor: pointer;
-	padding: 10px;
-	display: inline-block;
-	border: 0px;
-	transition: 0.1s all ease-out;
-}
-.ratings span:first-of-type {
-	border-radius: 10px 0 0 10px;
-}
-.ratings span:last-of-type {
-	border-radius: 0 10px 10px 0;
-}
-
-.ratings span.disabled {
-	background: var(--rich-black-fogra-29);
-	transform: scale(0.8);
-	margin: -4px;
-}
-.ratings span:hover {
-	transform: scale(1.1);
-	border-radius: 2px;
+.sortBy {
+	width: 200px;
 }
 button {
 	padding: 10px;
