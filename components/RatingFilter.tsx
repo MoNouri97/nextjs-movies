@@ -7,10 +7,7 @@ interface Prop {
 }
 const RatingFilter: React.FC<Prop> = ({ rating, onChange }) => {
 	const ratings = ['00', '10', '20', '30', '40', '50', '60', '70', '80', '90'];
-	const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-		console.log(e.target.value);
-		onChange(e.target.value + '');
-	};
+
 	return (
 		<div className='ratings'>
 			<Form>
@@ -20,6 +17,7 @@ const RatingFilter: React.FC<Prop> = ({ rating, onChange }) => {
 					<Button.Group>
 						{ratings.map((r, i) => (
 							<Button
+								toggle
 								key={i}
 								onClick={() => onChange(r.charAt(0))}
 								active={parseInt(r) < parseInt(rating) * 10 ? false : true}

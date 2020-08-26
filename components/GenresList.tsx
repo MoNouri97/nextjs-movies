@@ -17,6 +17,7 @@ export const GenresList = ({ endpoint, onChange, active }) => {
 							className='genre'
 							key={genre.id}
 							onClick={() => onChange(genre)}
+							toggle
 							active={genre.id == active}
 						>
 							{genre.name}
