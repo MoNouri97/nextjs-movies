@@ -70,18 +70,7 @@ export default function Home({ endpoint, endpointForGenres, apiKey }) {
 		setRating(rating);
 		setPage(1);
 	};
-	const handleNext = () => {
-		if (page == resolvedData.total_pages) {
-			return;
-		}
-		setPage(current => current + 1);
-	};
-	const handlePrevious = () => {
-		if (page == 1) {
-			return;
-		}
-		setPage(current => current - 1);
-	};
+
 	const router = useRouter();
 	return (
 		<div className={styles.container}>
@@ -101,13 +90,7 @@ export default function Home({ endpoint, endpointForGenres, apiKey }) {
 					<RatingFilter rating={rating} onChange={handleRatingChange} />
 					<SortBy sort={sort} onChange={setSort} />
 				</div>
-				<p className={styles.description}>
-					{`${genre.name ? genre.name : 'Popular'} Movies`}
-				</p>
-				<Pagination
-					{...{ handleNext, handlePrevious, page }}
-					totalPages={totalPages.current}
-				/>
+				<Pagination {...{ setPage, page }} totalPages={totalPages.current} />
 
 				<div className='grid'>
 					{resolvedData != latestData && (
@@ -119,10 +102,7 @@ export default function Home({ endpoint, endpointForGenres, apiKey }) {
 						results.map((movie, i) => <Card key={i} movie={movie} />)}
 				</div>
 				<hr />
-				<Pagination
-					{...{ handleNext, handlePrevious, page }}
-					totalPages={totalPages.current}
-				/>
+				<Pagination {...{ setPage, page }} totalPages={totalPages.current} />
 			</main>
 			<Modal
 				isOpen={!!router.query.movie}
