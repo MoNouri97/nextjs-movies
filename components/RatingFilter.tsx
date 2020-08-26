@@ -1,5 +1,5 @@
 import React from 'react';
-import { Button } from 'semantic-ui-react';
+import { Button, Form } from 'semantic-ui-react';
 
 interface Prop {
 	rating: string;
@@ -13,27 +13,23 @@ const RatingFilter: React.FC<Prop> = ({ rating, onChange }) => {
 	};
 	return (
 		<div className='ratings'>
-			<p>Minimum Rating : </p>
-			<Button.Group>
-				{ratings.map((r, i) => (
-					<Button
-						key={i}
-						onClick={() => onChange(r.charAt(0))}
-						active={parseInt(r) < parseInt(rating) * 10 ? false : true}
-					>
-						{r}
-					</Button>
-				))}
-			</Button.Group>
-			{/* {ratings.map((r, i) => (
-				<span
-					key={i}
-					onClick={() => onChange(r.charAt(0))}
-					className={parseInt(r) < parseInt(rating) * 10 ? 'disabled' : ''}
-				>
-					{r}
-				</span>
-			))} */}
+			<Form>
+				<Form.Field>
+					<label>Minimum Rating : </label>
+
+					<Button.Group>
+						{ratings.map((r, i) => (
+							<Button
+								key={i}
+								onClick={() => onChange(r.charAt(0))}
+								active={parseInt(r) < parseInt(rating) * 10 ? false : true}
+							>
+								{r}
+							</Button>
+						))}
+					</Button.Group>
+				</Form.Field>
+			</Form>
 		</div>
 	);
 };
