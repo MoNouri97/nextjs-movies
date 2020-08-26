@@ -8,6 +8,7 @@
     "start": "next start"
   },
   "dependencies": {
+    "@sanity/client": "^1.150.1",
     "fomantic-ui-css": "^2.8.6",
     "next": "9.5.1",
     "react": "16.13.1",
