@@ -5,20 +5,27 @@ const option = [
 	{
 		key: 'popular',
 		text: 'Popularity',
-		value: 'popular',
+		value: 'popularity.desc',
 	},
 	{
 		key: 'release',
 		text: 'Release Date',
-		value: 'release',
+		value: 'primary_release_date.desc',
 	},
 	{
 		key: 'revenue',
 		text: 'Revenue',
-		value: 'revenue',
+		value: 'revenue.desc',
 	},
 ];
-const SortBy = () => {
+
+type Props = {
+	sort: string;
+	onChange: (string) => void;
+};
+const SortBy = ({ sort, onChange }: Props) => {
+	const handleChange = (e, { value }) => onChange(value);
+
 	return (
 		<div>
 			<Form>
@@ -26,7 +33,8 @@ const SortBy = () => {
 					<Form.Field
 						className='sortBy'
 						control={Select}
-						defaultValue='popular'
+						onChange={handleChange}
+						value={sort}
 						label='Sort By:'
 						options={option}
 					/>
