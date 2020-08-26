@@ -10,17 +10,27 @@ import RatingFilter from '../components/RatingFilter';
 import Pagination from '../components/Pagination';
 import MovieInfo from '../components/MovieInfo';
 import SortBy from '../components/SortBy';
+import TestSanity from '../components/TestSanity';
 
 Modal.setAppElement('#__next');
-const fetchMovies = async (__key, endpoint, page, genre, minR) => {
+const fetchMovies = async (
+	__key: string,
+	endpoint: string,
+	page: number,
+	genre: string,
+	minR: string,
+	sort: string,
+) => {
 	let info = '';
 	if (genre) info += '&with_genres=' + genre;
 	if (minR) info += '&vote_average.gte=' + minR;
+	if (sort) info += '&sort_by=' + sort;
 	const res = await fetch(`${endpoint}&page=${page}${info}`);
 	return res.json();
 };
 export async function getStaticProps() {
-	const endpoint = `https://api.themoviedb.org/3/discover/movie?api_key=${process.env.API_KEY}&language=en-US&sort_by=popularity.desc&include_adult=false&include_video=false&`;
+	const currentDate = new Date().toISOString();
+	const endpoint = `https://api.themoviedb.org/3/discover/movie?api_key=${process.env.API_KEY}&vote_count.gte=50&language=en-US&include_adult=false&include_video=false&primary_release_date.gte=1980-01-01&primary_release_date.lte=${currentDate}`;
 	const endpointForGenres = `https://api.themoviedb.org/3/genre/movie/list?api_key=${process.env.API_KEY}&language=en-US`;
 
 	return {
@@ -41,8 +51,9 @@ export default function Home({ endpoint, endpointForGenres, apiKey }) {
 	const totalPages = useRef(500);
 	const [genre, setGenre] = useState<Genre>({ id: '16', name: 'Animation' });
 	const [rating, setRating] = useState('5');
+	const [sort, setSort] = useState('popularity.desc');
 	const { resolvedData, latestData, status } = usePaginatedQuery(
-		['movies', endpoint, page, genre.id, rating],
+		['movies', endpoint, page, genre.id, rating, sort],
 		fetchMovies,
 	);
 	let results = [];
@@ -88,7 +99,7 @@ export default function Home({ endpoint, endpointForGenres, apiKey }) {
 				/>
 				<div className='filters'>
 					<RatingFilter rating={rating} onChange={handleRatingChange} />
-					<SortBy />
+					<SortBy sort={sort} onChange={setSort} />
 				</div>
 				<p className={styles.description}>
 					{`${genre.name ? genre.name : 'Popular'} Movies`}
