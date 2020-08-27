@@ -1,4 +1,4 @@
-import React, { memo, useRef } from 'react';
+import React from 'react';
 import { usePaginatedQuery } from 'react-query';
 import Card from './Card';
 
@@ -39,8 +39,6 @@ const MoviesGrid = ({
 		['movies', endpoint, page, genreID, rating, sort],
 		fetchMovies,
 	);
-	const ren = useRef(0);
-	console.log(++ren.current);
 
 	let results = [];
 

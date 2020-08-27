@@ -15,7 +15,7 @@ import SanityPicksGrid from '../components/SanityPicksGrid';
 Modal.setAppElement('#__next');
 
 export async function getStaticProps() {
-	const currentDate = new Date().toISOString();
+	const currentDate = new Date().toISOString().slice(0, 10);
 	const endpoint = `https://api.themoviedb.org/3/discover/movie?api_key=${process.env.API_KEY}&vote_count.gte=50&language=en-US&include_adult=false&include_video=false&primary_release_date.gte=1980-01-01&primary_release_date.lte=${currentDate}`;
 	const endpointForGenres = `https://api.themoviedb.org/3/genre/movie/list?api_key=${process.env.API_KEY}&language=en-US`;
 
@@ -38,7 +38,8 @@ export default function Home({ endpoint, endpointForGenres, apiKey }) {
 	const [genre, setGenre] = useState<Genre>({ id: '16', name: 'Animation' });
 	const [rating, setRating] = useState('5');
 	const [sort, setSort] = useState('popularity.desc');
-
+	// const ren = useRef(0);
+	// console.log(++ren.current);
 	const handleGenreChange = (genre: Genre) => {
 		setGenre(genre);
 		setPage(1);
