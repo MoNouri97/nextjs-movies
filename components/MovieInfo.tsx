@@ -23,6 +23,7 @@ interface Props {
 }
 async function fetchMovie(__key, query, apiKey) {
 	const id = query.id ? query.id : query.movie;
+	if (!id) return;
 	const endpoint = ` https://api.themoviedb.org/3/movie/${id}?api_key=${apiKey}&language=en-US`;
 	const movie = await fetch(endpoint);
 
