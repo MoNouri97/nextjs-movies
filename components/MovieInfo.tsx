@@ -2,6 +2,7 @@ import React, { useEffect } from 'react';
 import styles from '../styles/movie.id.module.css';
 import { useQuery } from 'react-query';
 import { useRouter } from 'next/router';
+import { Button } from 'semantic-ui-react';
 
 const currencyFormat = (num: number) => {
 	return `$ ${num.toFixed(0).replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,')}`;
@@ -37,49 +38,65 @@ const MovieInfo = ({ apiKey }) => {
 		fetchMovie,
 	);
 	const movie = data;
-	if (!movie) return <h1>loading...</h1>;
 	return (
 		<div className={styles.main}>
-			<div className={styles.poster}>
-				{movie.poster_path && (
-					<img src={`https://image.tmdb.org/t/p/w400/${movie.poster_path}`} />
-				)}
-				{!movie.poster_path && (
-					<div className={styles.noimage}>no poster available</div>
-				)}
-			</div>
-			<div className={styles.info}>
-				<div className={styles.title + ' ' + styles.wide}>{movie.title}</div>
-				<div className={styles.desc + ' ' + styles.wide}>
-					{movie.tagline}
-					<span>{movie.overview}</span>
-				</div>
-				<div className={styles.genres + ' ' + styles.wide}>
-					genres list
-					<ul>
-						{movie.genres &&
-							movie.genres.map(g => <li key={g.id}>{g.name}</li>)}
-					</ul>
-				</div>
-				<div className={styles.release}>
-					release date
-					<span>{movie.release_date}</span>
-				</div>
-				<div className={styles.vote}>
-					Rating
-					<span>{movie.vote_average} /10</span>
-				</div>
-				{movie.budget && movie.budget != '0' ? (
-					<div className={styles.budget}>
-						budget<span>{currencyFormat(movie.budget)}</span>
+			<Button
+				style={{ position: 'absolute', top: '5px', left: '5px' }}
+				circular
+				color='red'
+				icon='close'
+				onClick={() => {
+					router.push('/');
+				}}
+			/>
+			{movie && (
+				<>
+					<div className={styles.poster}>
+						{movie.poster_path && (
+							<img
+								src={`https://image.tmdb.org/t/p/w400/${movie.poster_path}`}
+							/>
+						)}
+						{!movie.poster_path && (
+							<div className={styles.noimage}>no poster available</div>
+						)}
 					</div>
-				) : null}
-				{movie.revenue && movie.revenue != '0' ? (
-					<div className={styles.revenue}>
-						box office<span>{currencyFormat(movie.revenue)}</span>
+					<div className={styles.info}>
+						<div className={styles.title + ' ' + styles.wide}>
+							{movie.title}
+						</div>
+						<div className={styles.desc + ' ' + styles.wide}>
+							{movie.tagline}
+							<span>{movie.overview}</span>
+						</div>
+						<div className={styles.genres + ' ' + styles.wide}>
+							genres list
+							<ul>
+								{movie.genres &&
+									movie.genres.map(g => <li key={g.id}>{g.name}</li>)}
+							</ul>
+						</div>
+						<div className={styles.release}>
+							release date
+							<span>{movie.release_date}</span>
+						</div>
+						<div className={styles.vote}>
+							Rating
+							<span>{movie.vote_average} /10</span>
+						</div>
+						{movie.budget && movie.budget != '0' ? (
+							<div className={styles.budget}>
+								budget<span>{currencyFormat(movie.budget)}</span>
+							</div>
+						) : null}
+						{movie.revenue && movie.revenue != '0' ? (
+							<div className={styles.revenue}>
+								box office<span>{currencyFormat(movie.revenue)}</span>
+							</div>
+						) : null}
 					</div>
-				) : null}
-			</div>
+				</>
+			)}
 		</div>
 	);
 };
