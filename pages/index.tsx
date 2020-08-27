@@ -1,33 +1,19 @@
 import Head from 'next/head';
 import styles from '../styles/Home.module.css';
-import { usePaginatedQuery } from 'react-query';
-import { useState, useRef } from 'react';
+import { useState, useRef, useEffect, useCallback } from 'react';
 import Modal from 'react-modal';
 import { useRouter } from 'next/router';
-import Card from '../components/Card';
 import { GenresList } from '../components/GenresList';
 import RatingFilter from '../components/RatingFilter';
 import Pagination from '../components/Pagination';
 import MovieInfo from '../components/MovieInfo';
 import SortBy from '../components/SortBy';
-import TestSanity from '../components/TestSanity';
+import { Tab } from 'semantic-ui-react';
+import MoviesGrid from '../components/MoviesGrid';
+import SanityPicksGrid from '../components/SanityPicksGrid';
 
 Modal.setAppElement('#__next');
-const fetchMovies = async (
-	__key: string,
-	endpoint: string,
-	page: number,
-	genre: string,
-	minR: string,
-	sort: string,
-) => {
-	let info = '';
-	if (genre) info += '&with_genres=' + genre;
-	if (minR) info += '&vote_average.gte=' + minR;
-	if (sort) info += '&sort_by=' + sort;
-	const res = await fetch(`${endpoint}&page=${page}${info}`);
-	return res.json();
-};
+
 export async function getStaticProps() {
 	const currentDate = new Date().toISOString();
 	const endpoint = `https://api.themoviedb.org/3/discover/movie?api_key=${process.env.API_KEY}&vote_count.gte=50&language=en-US&include_adult=false&include_video=false&primary_release_date.gte=1980-01-01&primary_release_date.lte=${currentDate}`;
@@ -48,20 +34,11 @@ interface Genre {
 }
 export default function Home({ endpoint, endpointForGenres, apiKey }) {
 	const [page, setPage] = useState(1);
-	const totalPages = useRef(500);
+	const [totalPages, setTotalPages] = useState(500);
 	const [genre, setGenre] = useState<Genre>({ id: '16', name: 'Animation' });
 	const [rating, setRating] = useState('5');
 	const [sort, setSort] = useState('popularity.desc');
-	const { resolvedData, latestData, status } = usePaginatedQuery(
-		['movies', endpoint, page, genre.id, rating, sort],
-		fetchMovies,
-	);
-	let results = [];
 
-	if (status === 'success') {
-		results = resolvedData.results;
-		totalPages.current = resolvedData.total_pages;
-	}
 	const handleGenreChange = (genre: Genre) => {
 		setGenre(genre);
 		setPage(1);
@@ -72,6 +49,35 @@ export default function Home({ endpoint, endpointForGenres, apiKey }) {
 	};
 
 	const router = useRouter();
+	const panes = [
+		{
+			menuItem: 'All Movies',
+			render: () => (
+				<MoviesGrid
+					endpoint={endpoint}
+					page={page}
+					genreID={genre.id}
+					rating={rating}
+					sort={sort}
+					setTotalPages={setTotalPages}
+				/>
+			),
+		},
+		{
+			menuItem: 'Gold Picks',
+			render: () => (
+				<SanityPicksGrid
+					picks='gold'
+					page={page}
+					genreID={genre.id}
+					rating={rating}
+					sort={sort}
+					setTotalPages={setTotalPages}
+				/>
+			),
+		},
+	];
+
 	return (
 		<div className={styles.container}>
 			<Head>
@@ -90,19 +96,15 @@ export default function Home({ endpoint, endpointForGenres, apiKey }) {
 					<RatingFilter rating={rating} onChange={handleRatingChange} />
 					<SortBy sort={sort} onChange={setSort} />
 				</div>
-				<Pagination {...{ setPage, page }} totalPages={totalPages.current} />
-
-				<div className='grid'>
-					{resolvedData != latestData && (
-						<div className='loading'>
-							<span></span>
-						</div>
-					)}
-					{resolvedData &&
-						results.map((movie, i) => <Card key={i} movie={movie} />)}
-				</div>
+				<Pagination {...{ setPage, page }} totalPages={totalPages} />
 				<hr />
-				<Pagination {...{ setPage, page }} totalPages={totalPages.current} />
+				<Tab
+					menu={{ pointing: true }}
+					style={{ width: '100%' }}
+					panes={panes}
+				/>
+				<hr />
+				<Pagination {...{ setPage, page }} totalPages={totalPages} />
 			</main>
 			<Modal
 				isOpen={!!router.query.movie}
