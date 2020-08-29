@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import Link from 'next/link';
 import styles from '../styles/Card.module.css';
+import { Label, Placeholder } from 'semantic-ui-react';
 interface Props {
 	movie: any;
 }
@@ -31,7 +32,18 @@ const Card = ({ movie }) => {
 						<>
 							<img ref={imgRef} />
 
-							{loading && <div className='loading_img'></div>}
+							{loading && (
+								<Placeholder
+									style={{
+										height: '100%',
+										width: '100%',
+										position: 'absolute',
+										top: 0,
+									}}
+								>
+									<Placeholder.Image />
+								</Placeholder>
+							)}
 						</>
 					)}
 					{!movie.poster_path && (
@@ -43,7 +55,7 @@ const Card = ({ movie }) => {
 					</span>
 				</a>
 				<div className={styles['post-text']}>
-					<span className={styles['post-meta']}>{movie.release_date}</span>
+					<Label>{movie.release_date}</Label>
 					<h3>
 						<a>{movie.title}</a>
 					</h3>
