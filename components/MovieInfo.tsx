@@ -19,25 +19,20 @@ type Movie = {
 	revenue: number;
 	vote_average: string;
 };
-interface Props {
-	movie?: Movie;
-}
-async function fetchMovie(__key, query, apiKey) {
+
+async function fetchMovie(__key, query) {
 	const id = query.id ? query.id : query.movie;
 	if (!id) return;
-	const endpoint = ` https://api.themoviedb.org/3/movie/${id}?api_key=${apiKey}&language=en-US`;
+	const endpoint = `/api/movie/${id}`;
 	const movie = await fetch(endpoint);
 
 	return movie.json();
 }
-const MovieInfo = ({ apiKey }) => {
+const MovieInfo = () => {
 	const router = useRouter();
 
-	const { data, status } = useQuery(
-		['movie', router.query, apiKey],
-		fetchMovie,
-	);
-	const movie = data;
+	const { data, status } = useQuery(['movie', router.query], fetchMovie);
+	const movie: Movie = data;
 	return (
 		<div className={styles.main}>
 			<Button
@@ -84,12 +79,12 @@ const MovieInfo = ({ apiKey }) => {
 							Rating
 							<span>{movie.vote_average} /10</span>
 						</div>
-						{movie.budget && movie.budget != '0' ? (
+						{movie.budget && movie.budget != 0 ? (
 							<div className={styles.budget}>
 								budget<span>{currencyFormat(movie.budget)}</span>
 							</div>
 						) : null}
-						{movie.revenue && movie.revenue != '0' ? (
+						{movie.revenue && movie.revenue != 0 ? (
 							<div className={styles.revenue}>
 								box office<span>{currencyFormat(movie.revenue)}</span>
 							</div>

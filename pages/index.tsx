@@ -11,28 +11,15 @@ import SortBy from '../components/SortBy';
 import { Tab } from 'semantic-ui-react';
 import MoviesGrid from '../components/MoviesGrid';
 import SanityPicksGrid from '../components/SanityPicksGrid';
+import TestNode from '../dev helpers/TestNode';
 
 Modal.setAppElement('#__next');
-
-export async function getStaticProps() {
-	const currentDate = new Date().toISOString().slice(0, 10);
-	const endpoint = `https://api.themoviedb.org/3/discover/movie?api_key=${process.env.API_KEY}&vote_count.gte=50&language=en-US&include_adult=false&include_video=false&primary_release_date.gte=1980-01-01&primary_release_date.lte=${currentDate}`;
-	const endpointForGenres = `https://api.themoviedb.org/3/genre/movie/list?api_key=${process.env.API_KEY}&language=en-US`;
-
-	return {
-		props: {
-			endpoint,
-			endpointForGenres,
-			apiKey: process.env.API_KEY,
-		},
-	};
-}
 
 interface Genre {
 	name: string;
 	id: string;
 }
-export default function Home({ endpoint, endpointForGenres, apiKey }) {
+export default function Home() {
 	const [page, setPage] = useState(1);
 	const [totalPages, setTotalPages] = useState(500);
 	const [genre, setGenre] = useState<Genre>({ id: '16', name: 'Animation' });
@@ -55,7 +42,6 @@ export default function Home({ endpoint, endpointForGenres, apiKey }) {
 			menuItem: 'All Movies',
 			render: () => (
 				<MoviesGrid
-					endpoint={endpoint}
 					page={page}
 					genreID={genre.id}
 					rating={rating}
@@ -81,6 +67,7 @@ export default function Home({ endpoint, endpointForGenres, apiKey }) {
 
 	return (
 		<div className={styles.container}>
+			<TestNode />
 			<Head>
 				<title>Movies</title>
 				<link rel='icon' href='/favicon.ico' />
@@ -88,11 +75,7 @@ export default function Home({ endpoint, endpointForGenres, apiKey }) {
 
 			<main className={styles.main}>
 				<h1 className={styles.title}>Welcome to Movies</h1>
-				<GenresList
-					endpoint={endpointForGenres}
-					onChange={handleGenreChange}
-					active={genre.id}
-				/>
+				<GenresList onChange={handleGenreChange} active={genre.id} />
 				<div className='filters'>
 					<RatingFilter rating={rating} onChange={handleRatingChange} />
 					<SortBy sort={sort} onChange={setSort} />
@@ -127,7 +110,7 @@ export default function Home({ endpoint, endpointForGenres, apiKey }) {
 					},
 				}}
 			>
-				<MovieInfo apiKey={apiKey} />
+				<MovieInfo />
 			</Modal>
 
 			<footer className={styles.footer}>Browse Movies</footer>
