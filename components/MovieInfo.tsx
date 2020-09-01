@@ -90,7 +90,7 @@ const MovieInfo = () => {
 							Director{movie.director.length > 1 ? 's' : ''}
 							<span>
 								{movie.director.map((d, i) => (
-									<span>
+									<span key={d.name}>
 										{d.name}
 										{i + 1 != movie.director.length ? ',' : ''}
 									</span>

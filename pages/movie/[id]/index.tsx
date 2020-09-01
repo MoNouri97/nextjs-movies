@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import Head from 'next/head';
 import styles from '../../../styles/movie.id.module.css';
 import MovieInfo from '../../../components/MovieInfo';

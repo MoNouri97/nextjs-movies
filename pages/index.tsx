@@ -1,6 +1,6 @@
 import Head from 'next/head';
 import styles from '../styles/Home.module.css';
-import { useState, useRef, useEffect, useCallback } from 'react';
+import { useState } from 'react';
 import Modal from 'react-modal';
 import { useRouter } from 'next/router';
 import { GenresList } from '../components/GenresList';
@@ -11,7 +11,6 @@ import SortBy from '../components/SortBy';
 import { Tab } from 'semantic-ui-react';
 import MoviesGrid from '../components/MoviesGrid';
 import SanityPicksGrid from '../components/SanityPicksGrid';
-import TestNode from '../dev helpers/TestNode';
 
 Modal.setAppElement('#__next');
 
@@ -67,7 +66,6 @@ export default function Home() {
 
 	return (
 		<div className={styles.container}>
-			<TestNode />
 			<Head>
 				<title>Movies</title>
 				<link rel='icon' href='/favicon.ico' />

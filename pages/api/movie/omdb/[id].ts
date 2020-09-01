@@ -1,5 +1,4 @@
 import { NextApiRequest, NextApiResponse } from 'next';
-import { error } from 'console';
 
 export default async (req: NextApiRequest, res: NextApiResponse) => {
 	const {
