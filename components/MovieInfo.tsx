@@ -19,6 +19,7 @@ type Movie = {
 	revenue: number;
 	vote_average: string;
 	imdb_id: string;
+	director: [{ name: string }];
 };
 
 async function fetchMovie(__key, query) {
@@ -80,9 +81,21 @@ const MovieInfo = () => {
 									movie.genres.map(g => <li key={g.id}>{g.name}</li>)}
 							</ul>
 						</div>
-						<div className={styles.wide}>
+						<div>
 							release date
 							<span>{movie.release_date}</span>
+						</div>
+						<div>
+							{/* adding s for more than one director */}
+							Director{movie.director.length > 1 ? 's' : ''}
+							<span>
+								{movie.director.map((d, i) => (
+									<span>
+										{d.name}
+										{i + 1 != movie.director.length ? ',' : ''}
+									</span>
+								))}
+							</span>
 						</div>
 						<div>
 							Votes Average
