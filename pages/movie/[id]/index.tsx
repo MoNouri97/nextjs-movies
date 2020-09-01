@@ -8,10 +8,10 @@ export async function getServerSideProps({ query }) {
 	const endpoint = ` https://api.themoviedb.org/3/movie/${id}?api_key=${process.env.API_KEY}&language=en-US`;
 	const movie = await (await fetch(endpoint)).json();
 
-	return { props: { movie, apiKey: process.env.API_KEY } };
+	return { props: { movie } };
 }
 
-const index = ({ movie, apiKey }) => {
+const index = ({ movie }) => {
 	return (
 		<div className='container'>
 			<Head>
@@ -25,7 +25,7 @@ const index = ({ movie, apiKey }) => {
 				}}
 			>
 				<>
-					<MovieInfo apiKey={apiKey} />
+					<MovieInfo />
 				</>
 			</div>
 		</div>

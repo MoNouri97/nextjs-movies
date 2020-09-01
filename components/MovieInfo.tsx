@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import styles from '../styles/movie.id.module.css';
 import { useQuery } from 'react-query';
 import { useRouter } from 'next/router';
@@ -18,6 +18,7 @@ type Movie = {
 	budget: number;
 	revenue: number;
 	vote_average: string;
+	imdb_id: string;
 };
 
 async function fetchMovie(__key, query) {
@@ -25,14 +26,22 @@ async function fetchMovie(__key, query) {
 	if (!id) return;
 	const endpoint = `/api/movie/${id}`;
 	const movie = await fetch(endpoint);
-
+	return movie.json();
+}
+async function fetchOmdb(__key, id) {
+	if (!id) return;
+	const endpoint = `/api/movie/omdb/${id}`;
+	const movie = await fetch(endpoint);
 	return movie.json();
 }
 const MovieInfo = () => {
 	const router = useRouter();
 
-	const { data, status } = useQuery(['movie', router.query], fetchMovie);
+	const { data } = useQuery(['movie', router.query], fetchMovie);
 	const movie: Movie = data;
+	const { data: omdbData } = useQuery(['omdb', movie?.imdb_id], fetchOmdb, {
+		enabled: movie,
+	});
 	return (
 		<div className={styles.main}>
 			<Button
@@ -71,21 +80,29 @@ const MovieInfo = () => {
 									movie.genres.map(g => <li key={g.id}>{g.name}</li>)}
 							</ul>
 						</div>
-						<div className={styles.release}>
+						<div className={styles.wide}>
 							release date
 							<span>{movie.release_date}</span>
 						</div>
-						<div className={styles.vote}>
-							Rating
+						<div>
+							Votes Average
 							<span>{movie.vote_average} /10</span>
 						</div>
+						{omdbData ? (
+							<div>
+								Imdb Rating
+								<span>{omdbData.imdbRating} /10</span>
+							</div>
+						) : (
+							<div></div>
+						)}
 						{movie.budget && movie.budget != 0 ? (
-							<div className={styles.budget}>
+							<div>
 								budget<span>{currencyFormat(movie.budget)}</span>
 							</div>
 						) : null}
 						{movie.revenue && movie.revenue != 0 ? (
-							<div className={styles.revenue}>
+							<div>
 								box office<span>{currencyFormat(movie.revenue)}</span>
 							</div>
 						) : null}
