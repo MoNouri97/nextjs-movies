@@ -2,12 +2,12 @@ import React from 'react';
 import { useQuery } from 'react-query';
 import { Button } from 'semantic-ui-react';
 
-const fetchGenres = async (__key, endpoint) => {
-	const res = await fetch(endpoint);
+const fetchGenres = async () => {
+	const res = await fetch('/api/genres');
 	return res.json();
 };
-export const GenresList = ({ endpoint, onChange, active }) => {
-	const { data, status } = useQuery(['genres', endpoint], fetchGenres);
+export const GenresList = ({ onChange, active }) => {
+	const { data, status } = useQuery(['genres'], fetchGenres);
 	return (
 		<div className='genres'>
 			{status === 'success' &&

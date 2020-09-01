@@ -81,6 +81,11 @@
 	display: block;
 	margin-top: 0.5rem;
 }
+.info div span > span {
+	display: inline-block;
+	font-size: 1.8rem;
+	margin-right: 0.5rem;
+}
 .info span {
 	font-size: 2rem;
 	font-weight: 500;

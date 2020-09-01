@@ -4,7 +4,6 @@ import Card from './Card';
 
 const fetchMovies = async (
 	__key: string,
-	endpoint: string,
 	page: number,
 	genre: string,
 	minR: string,
@@ -14,12 +13,11 @@ const fetchMovies = async (
 	if (genre) info += '&with_genres=' + genre;
 	if (minR) info += '&vote_average.gte=' + minR;
 	if (sort) info += '&sort_by=' + sort;
-	const res = await fetch(`${endpoint}&page=${page}${info}`);
+	const res = await fetch(`/api/movies?page=${page}${info}`);
 	return res.json();
 };
 
 interface Props {
-	endpoint: string;
 	page: number;
 	genreID: string;
 	rating: string;
@@ -27,16 +25,9 @@ interface Props {
 	setTotalPages: (number) => void;
 }
 
-const MoviesGrid = ({
-	setTotalPages,
-	endpoint,
-	page,
-	genreID,
-	rating,
-	sort,
-}: Props) => {
+const MoviesGrid = ({ setTotalPages, page, genreID, rating, sort }: Props) => {
 	const { resolvedData, latestData, status } = usePaginatedQuery(
-		['movies', endpoint, page, genreID, rating, sort],
+		['movies', page, genreID, rating, sort],
 		fetchMovies,
 	);
 

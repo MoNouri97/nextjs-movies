@@ -34,4 +34,4 @@ yarn-error.log*
 .vercel
 
 # helpers for dev
-helpers
+/dev\ helpers

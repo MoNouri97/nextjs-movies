@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import styles from '../styles/movie.id.module.css';
 import { useQuery } from 'react-query';
 import { useRouter } from 'next/router';
@@ -18,26 +18,31 @@ type Movie = {
 	budget: number;
 	revenue: number;
 	vote_average: string;
+	imdb_id: string;
+	director: [{ name: string }];
 };
-interface Props {
-	movie?: Movie;
-}
-async function fetchMovie(__key, query, apiKey) {
+
+async function fetchMovie(__key, query) {
 	const id = query.id ? query.id : query.movie;
 	if (!id) return;
-	const endpoint = ` https://api.themoviedb.org/3/movie/${id}?api_key=${apiKey}&language=en-US`;
+	const endpoint = `/api/movie/${id}`;
 	const movie = await fetch(endpoint);
-
 	return movie.json();
 }
-const MovieInfo = ({ apiKey }) => {
+async function fetchOmdb(__key, id) {
+	if (!id) return;
+	const endpoint = `/api/movie/omdb/${id}`;
+	const movie = await fetch(endpoint);
+	return movie.json();
+}
+const MovieInfo = () => {
 	const router = useRouter();
 
-	const { data, status } = useQuery(
-		['movie', router.query, apiKey],
-		fetchMovie,
-	);
-	const movie = data;
+	const { data } = useQuery(['movie', router.query], fetchMovie);
+	const movie: Movie = data;
+	const { data: omdbData } = useQuery(['omdb', movie?.imdb_id], fetchOmdb, {
+		enabled: movie,
+	});
 	return (
 		<div className={styles.main}>
 			<Button
@@ -76,21 +81,41 @@ const MovieInfo = ({ apiKey }) => {
 									movie.genres.map(g => <li key={g.id}>{g.name}</li>)}
 							</ul>
 						</div>
-						<div className={styles.release}>
+						<div>
 							release date
 							<span>{movie.release_date}</span>
 						</div>
-						<div className={styles.vote}>
-							Rating
+						<div>
+							{/* adding s for more than one director */}
+							Director{movie.director.length > 1 ? 's' : ''}
+							<span>
+								{movie.director.map((d, i) => (
+									<span key={d.name}>
+										{d.name}
+										{i + 1 != movie.director.length ? ',' : ''}
+									</span>
+								))}
+							</span>
+						</div>
+						<div>
+							Votes Average
 							<span>{movie.vote_average} /10</span>
 						</div>
-						{movie.budget && movie.budget != '0' ? (
-							<div className={styles.budget}>
+						{omdbData ? (
+							<div>
+								Imdb Rating
+								<span>{omdbData.imdbRating} /10</span>
+							</div>
+						) : (
+							<div></div>
+						)}
+						{movie.budget && movie.budget != 0 ? (
+							<div>
 								budget<span>{currencyFormat(movie.budget)}</span>
 							</div>
 						) : null}
-						{movie.revenue && movie.revenue != '0' ? (
-							<div className={styles.revenue}>
+						{movie.revenue && movie.revenue != 0 ? (
+							<div>
 								box office<span>{currencyFormat(movie.revenue)}</span>
 							</div>
 						) : null}
