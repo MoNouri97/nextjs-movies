@@ -3,6 +3,7 @@ import { fetchQuery } from '../lib/sanity';
 import { usePaginatedQuery } from 'react-query';
 import Card from './Card';
 import { Genre } from '../types/Genre';
+import { OurPick } from '../types/OurPicks';
 const fetchSanity = async (
 	__key: string,
 	page: number,
@@ -28,7 +29,7 @@ interface Props {
 	rating: string;
 	sort: string;
 	setTotalPages: (number) => void;
-	picks: 'gold' | 'silver';
+	picks: OurPick;
 }
 
 const SanityPicksGrid = ({
