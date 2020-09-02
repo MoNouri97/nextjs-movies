@@ -3,23 +3,10 @@ import styles from '../styles/movie.id.module.css';
 import { useQuery } from 'react-query';
 import { useRouter } from 'next/router';
 import { Button } from 'semantic-ui-react';
+import { Movie } from '../types/Movie';
 
 const currencyFormat = (num: number) => {
 	return `$ ${num.toFixed(0).replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,')}`;
-};
-
-type Movie = {
-	title: string;
-	poster_path: string;
-	tagline: string;
-	overview: string;
-	genres: any[];
-	release_date: string;
-	budget: number;
-	revenue: number;
-	vote_average: string;
-	imdb_id: string;
-	director: [{ name: string }];
 };
 
 async function fetchMovie(__key, query) {
