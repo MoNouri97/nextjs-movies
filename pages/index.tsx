@@ -52,7 +52,7 @@ export default function Home() {
 				<SanityPicksGrid
 					picks='gold'
 					page={page}
-					genreID={genre.id}
+					genre={genre}
 					rating={rating}
 					sort={sort}
 					setTotalPages={setTotalPages}
