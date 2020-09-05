@@ -46,6 +46,7 @@ const MovieInfo = () => {
 					<div className={styles.poster}>
 						{movie.poster_path && (
 							<img
+								alt='poster'
 								src={`https://image.tmdb.org/t/p/w400/${movie.poster_path}`}
 							/>
 						)}

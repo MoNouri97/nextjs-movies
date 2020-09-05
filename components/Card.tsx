@@ -2,11 +2,11 @@ import React, { useState, useEffect, useRef } from 'react';
 import Link from 'next/link';
 import styles from '../styles/Card.module.css';
 import { Label, Placeholder } from 'semantic-ui-react';
+import { Movie } from '../types/Movie';
 interface Props {
-	movie: any;
+	movie: Movie;
 }
-
-const Card = ({ movie }) => {
+const Card = ({ movie }: Props) => {
 	if (!movie) return <div></div>;
 
 	const [loading, setLoading] = useState(true);
@@ -30,7 +30,7 @@ const Card = ({ movie }) => {
 				<a>
 					{movie.poster_path && (
 						<>
-							<img ref={imgRef} />
+							<img alt='poster' ref={imgRef} />
 
 							{loading && (
 								<Placeholder
@@ -50,7 +50,7 @@ const Card = ({ movie }) => {
 						<div className={styles['noimage']}>no poster available</div>
 					)}
 					<span className={styles.rating}>
-						{parseFloat(movie.vote_average) * 10}
+						{movie.vote_average * 10}
 						<small>/100</small>
 					</span>
 				</a>

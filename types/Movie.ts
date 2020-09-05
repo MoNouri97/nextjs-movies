@@ -1,4 +1,7 @@
 export interface Movie {
+	_id?: string /**sanity id */;
+	director?: [{ name: string }];
+	id: number /** tmdb id */;
 	title: string;
 	poster_path: string;
 	tagline: string;
@@ -7,7 +10,6 @@ export interface Movie {
 	release_date: string;
 	budget: number;
 	revenue: number;
-	vote_average: string;
+	vote_average: number;
 	imdb_id: string;
-	director: [{ name: string }];
 }
