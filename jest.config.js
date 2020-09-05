@@ -8,7 +8,7 @@
 const TEST_REGEX = '(/__tests__/.*|(\\.|/)(test|spec))\\.(jsx?|js?|tsx?|ts?)$';
 
 module.exports = {
-	setupFilesAfterEnv: ['<rootDir>/setupTests.js'],
+	setupFilesAfterEnv: ['<rootDir>/setupTests.ts'],
 	testRegex: TEST_REGEX,
 	transform: {
 		'^.+\\.tsx?$': 'babel-jest',
