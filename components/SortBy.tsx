@@ -21,7 +21,7 @@ const option = [
 
 type Props = {
 	sort: string;
-	onChange: (string) => void;
+	onChange: (newSort: string) => void;
 };
 const SortBy = ({ sort, onChange }: Props) => {
 	const handleChange = (e, { value }) => onChange(value);

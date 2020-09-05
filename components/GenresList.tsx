@@ -1,12 +1,17 @@
 import React from 'react';
 import { useQuery } from 'react-query';
 import { Button } from 'semantic-ui-react';
+import { Genre } from '../types/Genre';
 
 const fetchGenres = async () => {
 	const res = await fetch('/api/genres');
 	return res.json();
 };
-export const GenresList = ({ onChange, active }) => {
+interface Prop {
+	onChange: (newGenre: Genre) => void;
+	active: string;
+}
+export const GenresList = ({ onChange, active }: Prop) => {
 	const { data, status } = useQuery(['genres'], fetchGenres);
 	return (
 		<div className='genres'>
