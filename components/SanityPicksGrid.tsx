@@ -15,11 +15,7 @@ const fetchSanity = async (
 		start = perPage * (page - 1),
 		end = start + perPage;
 	const formattedSort = sort.replace('.', ' ');
-	const query = /* groq */ `*[_type == "movie" &&
-	genres[].id==${genre.id} &&
-	vote_average>${minR} ]
-	[${start}...${end}]
-	| order(${formattedSort})`;
+	const query = /* groq */ `*[_type == "movie" && genres[].id==${genre.id} && vote_average>${minR} ] [${start}...${end}] | order(${formattedSort})`;
 
 	return fetchQuery(query);
 };
