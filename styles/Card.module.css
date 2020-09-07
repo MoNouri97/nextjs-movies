@@ -59,22 +59,13 @@
 	padding-top: 50%;
 }
 .post-text {
-	padding: 7px;
-}
-.post-entry .post-text .post-meta {
-	color: #ccc;
-	font-size: 13px;
-	display: block;
-	margin-bottom: 10px;
-}
-
-.post-entry .post-text h3 {
-	font-size: 1rem;
-	font-weight: 300;
-	color: #000000;
+	padding: 1.5rem 1rem;
+	text-align: center;
+	font-size: 1.2em;
 }
 
 .post-entry .post-text h3 a {
+	font-weight: 100;
 	color: #000000;
 }
 

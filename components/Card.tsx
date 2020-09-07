@@ -55,7 +55,6 @@ const Card = ({ movie }: Props) => {
 					</span>
 				</a>
 				<div className={styles['post-text']}>
-					<Label>{movie.release_date}</Label>
 					<h3>
 						<a>{movie.title}</a>
 					</h3>

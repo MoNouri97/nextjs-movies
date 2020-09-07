@@ -14,6 +14,7 @@ const Pagination = ({ setPage, page, totalPages }: Props) => {
 	return (
 		<div>
 			<Pg
+				siblingRange='0'
 				totalPages={totalPages}
 				activePage={page}
 				ellipsisItem={{
