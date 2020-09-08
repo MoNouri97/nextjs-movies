@@ -14,13 +14,16 @@
 	},
 	"dependencies": {
 		"@sanity/client": "^1.150.1",
+		"baseui": "^9.98.0",
 		"fomantic-ui-css": "^2.8.6",
 		"next": "9.5.1",
 		"react": "16.13.1",
 		"react-dom": "16.13.1",
 		"react-modal": "^3.11.2",
 		"react-query": "^2.5.13",
-		"semantic-ui-react": "^1.2.1"
+		"semantic-ui-react": "^1.2.1",
+		"styletron-engine-atomic": "^1.4.6",
+		"styletron-react": "^5.2.7"
 	},
 	"devDependencies": {
 		"@babel/core": "^7.11.6",

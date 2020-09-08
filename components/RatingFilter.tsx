@@ -1,31 +1,28 @@
 import React from 'react';
 import { Button, Form } from 'semantic-ui-react';
 
+import { Slider } from 'baseui/slider';
+const MySlider = () => {
+	const [value, setValue] = React.useState([25, 75]);
+	return <Slider value={value} onChange={({ value }) => setValue(value)} />;
+};
+
 interface Prop {
 	rating: string;
 	onChange: (newRating: string) => void;
 }
 const RatingFilter: React.FC<Prop> = ({ rating, onChange }) => {
-	const ratings = ['00', '10', '20', '30', '40', '50', '60', '70', '80', '90'];
-
 	return (
 		<div className='ratings'>
 			<Form>
 				<Form.Field>
 					<label>Minimum Rating : </label>
-
-					<Button.Group>
-						{ratings.map((r, i) => (
-							<Button
-								toggle
-								key={i}
-								onClick={() => onChange(r.charAt(0))}
-								active={parseInt(r) < parseInt(rating) * 10 ? false : true}
-							>
-								{r}
-							</Button>
-						))}
-					</Button.Group>
+					<Slider
+						max={9}
+						min={0}
+						value={[parseInt(rating), 9]}
+						onChange={({ value }) => console.log(value)}
+					/>
 				</Form.Field>
 			</Form>
 		</div>

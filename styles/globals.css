@@ -61,9 +61,8 @@ a {
 .sortBy {
 	width: 200px;
 }
-.rating {
-	max-width: 90vw;
-	overflow: auto;
+.ratings {
+	flex-basis: 50%;
 }
 .rating .form {
 	max-width: 90vw;
