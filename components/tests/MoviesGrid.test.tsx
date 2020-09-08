@@ -18,10 +18,10 @@ describe('MoviesGrid Component', () => {
 			}),
 		);
 		const props = {
-			genreID: '1',
+			genres: [1],
 			setTotalPages: jest.fn(),
 			page: 1,
-			rating: '5',
+			rating: [5, 10],
 			sort: 'asc',
 		};
 		await act(async () => {
@@ -30,7 +30,7 @@ describe('MoviesGrid Component', () => {
 		const { debug, queryByText } = screen;
 		// debug();
 		expect(global.fetch).toBeCalledWith(
-			`/api/movies?page=${props.page}&with_genres=${props.genreID}&vote_average.gte=${props.rating}&sort_by=${props.sort}`,
+			`/api/movies?page=${props.page}&with_genres=${props.genres}&vote_average.gte=${props.rating[0]}&vote_average.lte=${props.rating[1]}&sort_by=${props.sort}`,
 		);
 		expect(queryByText(MovieMock.title)).toBeTruthy();
 		expect(props.setTotalPages).toBeCalledTimes(1);
