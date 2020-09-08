@@ -1,5 +1,5 @@
 import React from 'react';
-import { Button, Form } from 'semantic-ui-react';
+import { Button, Form, Label } from 'semantic-ui-react';
 
 import { Slider } from 'baseui/slider';
 const MySlider = () => {
@@ -18,6 +18,16 @@ const RatingFilter: React.FC<Prop> = ({ rating, onChange }) => {
 				<Form.Field>
 					<label>Minimum Rating : </label>
 					<Slider
+						overrides={{
+							InnerTrack: {
+								style: {
+									background: '#ddd',
+								},
+							},
+							InnerThumb: ({ $thumbIndex }) => (
+								<Label>{setThumbLabels($thumbIndex)}</Label>
+							),
+						}}
 						max={10}
 						min={0}
 						step={0.1}
@@ -31,3 +41,6 @@ const RatingFilter: React.FC<Prop> = ({ rating, onChange }) => {
 };
 
 export default RatingFilter;
+function setThumbLabels($thumbIndex: number): React.ReactNode {
+	return $thumbIndex == 0 ? 'Min' : 'Max';
+}

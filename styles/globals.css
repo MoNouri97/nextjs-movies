@@ -62,12 +62,14 @@ a {
 	width: 200px;
 }
 .ratings {
-	flex-basis: 50%;
+	max-width: 80%;
+	min-width: 50%;
+	flex-basis: 500px;
 }
-.rating .form {
+/* .rating .form {
 	max-width: 90vw;
 	overflow: hidden;
-}
+} */
 button {
 	padding: 10px;
 	cursor: pointer;
