@@ -8,22 +8,22 @@ const fetchGenres = async () => {
 	return res.json();
 };
 interface Prop {
-	onChange: (newGenre: Genre) => void;
-	active: string;
+	onChange: (genre: number) => void;
+	active: number[];
 }
 export const GenresList = ({ onChange, active }: Prop) => {
 	const { data, status } = useQuery(['genres'], fetchGenres);
 	return (
 		<div className='genres'>
 			{status === 'success' &&
-				data.genres.map(genre => {
+				data.genres.map((genre: Genre) => {
 					return (
 						<Button
 							className='genre'
 							key={genre.id}
-							onClick={() => onChange(genre)}
+							onClick={() => onChange(genre.id)}
 							toggle
-							active={genre.id == active}
+							active={active.indexOf(genre.id) > -1}
 						>
 							{genre.name}
 						</Button>

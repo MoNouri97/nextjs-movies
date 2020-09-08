@@ -1,17 +1,17 @@
 import React from 'react';
 import { usePaginatedQuery } from 'react-query';
 import Card from './Card';
-import { Header } from 'semantic-ui-react';
 
 const fetchMovies = async (
 	__key: string,
 	page: number,
-	genre: string,
+	genres: number[],
 	rating: number[],
 	sort: string,
 ) => {
 	let info = '';
-	if (genre) info += '&with_genres=' + genre;
+
+	if (genres) info += '&with_genres=' + genres.join('|');
 	if (rating) {
 		const [minR, maxR] = rating;
 		info += '&vote_average.gte=' + minR;
@@ -24,15 +24,15 @@ const fetchMovies = async (
 
 interface Props {
 	page: number;
-	genreID: string;
+	genres: number[];
 	rating: number[];
 	sort: string;
 	setTotalPages: (number) => void;
 }
 
-const MoviesGrid = ({ setTotalPages, page, genreID, rating, sort }: Props) => {
+const MoviesGrid = ({ setTotalPages, page, genres, rating, sort }: Props) => {
 	const { resolvedData, latestData, status } = usePaginatedQuery(
-		['movies', page, genreID, rating, sort],
+		['movies', page, genres, rating, sort],
 		fetchMovies,
 	);
 
