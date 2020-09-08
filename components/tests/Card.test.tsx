@@ -16,7 +16,6 @@ describe('Card Component', () => {
 			queryByRole,
 		} = render(<Card movie={movie} />);
 		expect(queryByText(movie.title)).toBeTruthy();
-		expect(queryByText(movie.release_date)).toBeTruthy();
 		expect(queryByAltText('poster')).toBeTruthy();
 		expect(queryByText('no poster available')).toBeFalsy();
 		expect(queryByAltText('poster').getAttribute('src')).toBe(
