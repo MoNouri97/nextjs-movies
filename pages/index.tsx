@@ -19,7 +19,7 @@ export default function Home() {
 	const [page, setPage] = useState(1);
 	const [totalPages, setTotalPages] = useState(500);
 	const [genre, setGenre] = useState<Genre>({ id: '16', name: 'Animation' });
-	const [rating, setRating] = useState('5');
+	const [rating, setRating] = useState([5, 9]);
 	const [sort, setSort] = useState('popularity.desc');
 	// const ren = useRef(0);
 	// console.log(++ren.current);
@@ -27,7 +27,7 @@ export default function Home() {
 		setGenre(genre);
 		setPage(1);
 	};
-	const handleRatingChange = (rating: string) => {
+	const handleRatingChange = (rating: number[]) => {
 		setRating(rating);
 		setPage(1);
 	};

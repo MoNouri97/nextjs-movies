@@ -8,8 +8,8 @@ const MySlider = () => {
 };
 
 interface Prop {
-	rating: string;
-	onChange: (newRating: string) => void;
+	rating: number[];
+	onChange: (newRating: number[]) => void;
 }
 const RatingFilter: React.FC<Prop> = ({ rating, onChange }) => {
 	return (
@@ -18,10 +18,11 @@ const RatingFilter: React.FC<Prop> = ({ rating, onChange }) => {
 				<Form.Field>
 					<label>Minimum Rating : </label>
 					<Slider
-						max={9}
+						max={10}
 						min={0}
-						value={[parseInt(rating), 9]}
-						onChange={({ value }) => console.log(value)}
+						step={0.1}
+						value={rating}
+						onChange={({ value }) => onChange(value)}
 					/>
 				</Form.Field>
 			</Form>
