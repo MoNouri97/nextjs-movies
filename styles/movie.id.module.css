@@ -1,5 +1,6 @@
 .main {
 	--img-width: 400px;
+	--img-height: 600px;
 }
 .wrapper {
 	position: absolute;
@@ -7,21 +8,26 @@
 	min-height: 100vh;
 	top: 0;
 	right: 0;
-	padding: 1rem 5rem;
+	padding: 0rem 5rem;
 	background-repeat: no-repeat;
 	background-size: cover;
 	backdrop-filter: blur(50px);
+	display: flex;
+	align-items: center;
+	justify-content: center;
 }
 .main {
-	height: 590px;
-	filter: none;
+	position: relative;
+	flex-grow: 0;
+	height: max-content;
+	max-height: 95vh;
+	max-width: 1300px;
+	width: 100%;
 	display: flex;
 	flex-direction: row;
 	justify-content: center;
-	max-width: 100vw;
 	flex-wrap: wrap;
 	box-shadow: 0px 0px 25px -10px rgba(0, 0, 0, 0.38);
-	width: 100%;
 	margin: 0 auto;
 	border-radius: 10px;
 	overflow: auto;
@@ -31,11 +37,10 @@
 	flex-grow: 1;
 	padding: 0;
 	flex-basis: var(--img-width);
-	max-width: 40%;
-	/* max-width: var(--img-width); */
+	max-width: var(--img-width);
 	display: flex;
 	justify-content: center;
-	max-height: 590px;
+	min-height: var(--img-height);
 }
 .poster img {
 	width: 100%;
@@ -67,7 +72,8 @@
 }
 .info > div {
 	font-family: 'Lato';
-	font-size: 1.2rem;
+	/* font-size: 1.2rem; */
+	font-size: large;
 	font-weight: 900;
 	text-transform: capitalize;
 	color: var(--tiffany-blue);
@@ -78,18 +84,13 @@
 	display: block;
 	margin-top: 0.5rem;
 }
-.info div span > span {
-	display: inline-block;
-	font-size: 1.8rem;
-	margin-right: 0.5rem;
-}
 .info span {
-	font-size: 2rem;
+	font-size: medium;
 	font-weight: 500;
 }
 .info .desc span {
 	text-align: justify;
-	font-size: 1rem;
+	font-size: small;
 	font-weight: 500;
 	max-height: 100px;
 	overflow: auto;
@@ -120,5 +121,8 @@
 	.info {
 		display: flex;
 		flex-direction: column;
+	}
+	.wrapper {
+		padding: 1rem;
 	}
 }

@@ -101,9 +101,10 @@ export default function Home() {
 						backgroundColor: 'rgba(0, 0, 0, 0.75)',
 					},
 					content: {
-						top: '20px',
-						left: '50px',
-						right: '50px',
+						position: 'relative',
+						top: '0px',
+						left: '0px',
+						right: '0px',
 						bottom: '0px',
 						background: 'none',
 						border: 'none',

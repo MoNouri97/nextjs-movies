@@ -133,6 +133,9 @@ button:disabled {
 	}
 }
 .ReactModal__Overlay {
+	display: flex;
+	align-items: center;
+	justify-content: center;
 	opacity: 0;
 	z-index: 10;
 	transition: all 0.5s ease-in-out;
@@ -146,6 +149,8 @@ button:disabled {
 	opacity: 0;
 }
 .ReactModal__Content {
+	width: fit-content;
+	height: fit-content;
 	opacity: 0;
 	transform: scale(0.8);
 	transition: all 0.5s cubic-bezier(0.68, -0.55, 0.27, 1.55);

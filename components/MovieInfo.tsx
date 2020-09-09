@@ -16,7 +16,7 @@ const MovieInfo = () => {
 	return (
 		<div className={styles.main}>
 			<Button
-				style={{ position: 'absolute', top: '5px', left: '5px' }}
+				style={{ position: 'absolute', top: '5px', right: '5px' }}
 				circular
 				color='red'
 				icon='close'
