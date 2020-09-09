@@ -29,8 +29,12 @@ export default function Home() {
 
 		setPage(1);
 	};
-	const handleRatingChange = (rating: number[]) => {
-		setRating(rating);
+	const handleRatingChange = (newRating: number[]) => {
+		setRating(newRating);
+		setPage(1);
+	};
+	const handleSortChange = (newSort: string) => {
+		setSort(newSort);
 		setPage(1);
 	};
 
@@ -75,7 +79,7 @@ export default function Home() {
 				<GenresList onChange={handleGenreChange} active={genres} />
 				<div className='filters'>
 					<RatingFilter rating={rating} onChange={handleRatingChange} />
-					<SortBy sort={sort} onChange={setSort} />
+					<SortBy sort={sort} onChange={handleSortChange} />
 				</div>
 				<Pagination {...{ setPage, page }} totalPages={totalPages} />
 				<hr />

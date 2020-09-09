@@ -16,7 +16,7 @@ const RatingFilter: React.FC<Prop> = ({ rating, onChange }) => {
 		<div className='ratings'>
 			<Form>
 				<Form.Field>
-					<label>Minimum Rating : </label>
+					<label>Rating : </label>
 					<Slider
 						overrides={{
 							InnerTrack: {

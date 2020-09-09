@@ -7,6 +7,8 @@ import { OurPick } from '../types/OurPicks';
 import { CardsGrid } from './MoviesGrid';
 import { useTraceUpdate } from '../dev helpers/useTrace';
 
+const PER_PAGE = 40;
+
 interface Props {
 	page: number;
 	genres: number[];
@@ -31,10 +33,11 @@ const SanityPicksGrid = ({
 	let results;
 
 	if (status === 'success') {
-		results = resolvedData;
-		setTotalPages(1);
+		results = resolvedData.data;
+		console.log({ results, page: Math.ceil(resolvedData.count / PER_PAGE) });
+
+		setTotalPages(Math.ceil(resolvedData.count / PER_PAGE));
 	}
-	useTraceUpdate({ page, genres, rating, sort, setTotalPages, picks });
 	return <CardsGrid {...{ resolvedData, latestData, results }} />;
 };
 
@@ -47,10 +50,9 @@ const fetchSanity = async (
 	rating: number[],
 	sort: string,
 ) => {
-	const [minR, maxR] = rating;
-	const perPage = 40,
-		start = perPage * (page - 1),
-		end = start + perPage;
+	const [minR, maxR] = rating,
+		start = PER_PAGE * (page - 1),
+		end = start + PER_PAGE;
 
 	// sort
 	const formattedSort = sort.replace('.', ' ');
@@ -70,8 +72,10 @@ const fetchSanity = async (
 		formattedGenres ? `&& ${formattedGenres} ` : ''
 	}&& ${formattedRating}`;
 
-	const query = `*[ ${constraints} ] [${start}...${end}] | order(${formattedSort})`;
-	console.log(query);
+	const query = /* groq */ `{
+		"data" : *[ ${constraints} ] [${start}...${end}] | order(${formattedSort}),
+		"count": count(*[ ${constraints} ])
+	}`;
 
 	return fetchQuery(query);
 };

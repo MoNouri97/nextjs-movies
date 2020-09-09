@@ -55,14 +55,13 @@ export const CardsGrid = ({ resolvedData, latestData, results }) => {
 					<span></span>
 				</div>
 			)}
-			{resolvedData &&
-				(results.length > 0 ? (
-					results.map((movie, i) => <Card key={i} movie={movie} />)
-				) : (
-					<h1 style={{ gridColumn: 'span 2', textAlign: 'center' }}>
-						Oops No results{':('}
-					</h1>
-				))}
+			{results && results.length > 0 ? (
+				results.map((movie, i) => <Card key={i} movie={movie} />)
+			) : (
+				<h1 style={{ gridColumn: 'span 2', textAlign: 'center' }}>
+					Oops No results{':('}
+				</h1>
+			)}
 		</div>
 	);
 };
