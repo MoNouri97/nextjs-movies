@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import Link from 'next/link';
 import styles from '../styles/Card.module.css';
-import { Label, Placeholder } from 'semantic-ui-react';
+import { Placeholder } from 'semantic-ui-react';
 import { Movie } from '../types/Movie';
 interface Props {
 	movie: Movie;

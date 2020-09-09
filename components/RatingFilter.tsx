@@ -1,11 +1,7 @@
 import React from 'react';
-import { Button, Form, Label } from 'semantic-ui-react';
+import { Form, Label } from 'semantic-ui-react';
 
 import { Slider } from 'baseui/slider';
-const MySlider = () => {
-	const [value, setValue] = React.useState([25, 75]);
-	return <Slider value={value} onChange={({ value }) => setValue(value)} />;
-};
 
 interface Prop {
 	rating: number[];

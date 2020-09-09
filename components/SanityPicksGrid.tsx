@@ -1,11 +1,9 @@
 import React from 'react';
 import { fetchQuery } from '../lib/sanity';
 import { usePaginatedQuery } from 'react-query';
-import Card from './Card';
-import { Genre } from '../types/Genre';
+
 import { OurPick } from '../types/OurPicks';
 import { CardsGrid } from './MoviesGrid';
-import { useTraceUpdate } from '../dev helpers/useTrace';
 
 const PER_PAGE = 40;
 
