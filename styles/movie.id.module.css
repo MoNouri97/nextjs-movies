@@ -1,6 +1,6 @@
 .main {
 	--img-width: 400px;
-	--img-height: 600px;
+	--img-height: 590px;
 }
 .wrapper {
 	position: absolute;
@@ -20,7 +20,7 @@
 	position: relative;
 	flex-grow: 0;
 	height: max-content;
-	max-height: 95vh;
+	max-height: 100vh;
 	max-width: 1300px;
 	width: 100%;
 	display: flex;
@@ -31,6 +31,7 @@
 	margin: 0 auto;
 	border-radius: 10px;
 	overflow: auto;
+	overscroll-behavior: contain;
 	background: rgba(255, 255, 255, 0.828);
 }
 .poster {
@@ -85,12 +86,12 @@
 	margin-top: 0.5rem;
 }
 .info span {
-	font-size: medium;
+	font-size: 1.5rem;
 	font-weight: 500;
 }
 .info .desc span {
 	text-align: justify;
-	font-size: small;
+	font-size: 1rem;
 	font-weight: 500;
 	max-height: 100px;
 	overflow: auto;
