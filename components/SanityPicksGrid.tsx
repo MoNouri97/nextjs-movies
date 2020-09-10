@@ -32,9 +32,8 @@ const SanityPicksGrid = ({
 
 	if (status === 'success') {
 		results = resolvedData.data;
-		console.log({ results, page: Math.ceil(resolvedData.count / PER_PAGE) });
 
-		setTotalPages(Math.ceil(resolvedData.count / PER_PAGE));
+		setTotalPages(Math.ceil(resolvedData.total_results / PER_PAGE));
 	}
 	return <CardsGrid {...{ resolvedData, latestData, results }} />;
 };
@@ -72,7 +71,7 @@ const fetchSanity = async (
 
 	const query = /* groq */ `{
 		"data" : *[ ${constraints} ] [${start}...${end}] | order(${formattedSort}),
-		"count": count(*[ ${constraints} ])
+		"total_results": count(*[ ${constraints} ])
 	}`;
 
 	return fetchQuery(query);

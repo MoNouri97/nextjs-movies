@@ -49,19 +49,26 @@ export default MoviesGrid;
 
 export const CardsGrid = ({ resolvedData, latestData, results }) => {
 	return (
-		<div className='grid'>
-			{resolvedData != latestData && (
-				<div className='loading'>
-					<span></span>
-				</div>
+		<>
+			{resolvedData && (
+				<p style={{ textAlign: 'center' }}>
+					{resolvedData.total_results} results were found
+				</p>
 			)}
-			{results && results.length > 0 ? (
-				results.map((movie, i) => <Card key={i} movie={movie} />)
-			) : (
-				<h1 style={{ gridColumn: 'span 2', textAlign: 'center' }}>
-					Oops No results{':('}
-				</h1>
-			)}
-		</div>
+			<div className='grid'>
+				{resolvedData != latestData && (
+					<div className='loading'>
+						<span></span>
+					</div>
+				)}
+				{results && results.length > 0 ? (
+					results.map((movie, i) => <Card key={i} movie={movie} />)
+				) : (
+					<h1 style={{ gridColumn: 'span 2', textAlign: 'center' }}>
+						Please change your search criteria and try again
+					</h1>
+				)}
+			</div>
+		</>
 	);
 };

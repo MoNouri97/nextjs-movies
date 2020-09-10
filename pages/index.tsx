@@ -41,7 +41,7 @@ export default function Home() {
 	const router = useRouter();
 	const panes = [
 		{
-			menuItem: 'All Movies',
+			menuItem: 'All',
 			render: () => (
 				<MoviesGrid
 					page={page}
