@@ -22,7 +22,7 @@
 	height: max-content;
 	max-height: 100vh;
 	max-width: 1300px;
-	width: 100%;
+	width: 90vw;
 	display: flex;
 	flex-direction: row;
 	justify-content: center;
