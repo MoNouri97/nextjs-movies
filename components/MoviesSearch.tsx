@@ -58,8 +58,9 @@ const fetchSearch = throttle(
 
 interface Props {
 	setSearch: (str: string) => void;
+	setActiveTab: (str: string) => void;
 }
-const MoviesSearch = ({ setSearch }: Props) => {
+const MoviesSearch = ({ setSearch, setActiveTab }: Props) => {
 	const [state, dispatch] = React.useReducer(searchReducer, initialState);
 	const { loading, results, value } = state;
 	const router = useRouter();
@@ -92,12 +93,10 @@ const MoviesSearch = ({ setSearch }: Props) => {
 		[dispatch, router],
 	);
 	const handleSubmit = React.useCallback(() => {
+		setActiveTab('Search');
 		setSearch(value);
-	}, [setSearch, value]);
+	}, [setSearch, value, setActiveTab]);
 
-	useEffect(() => {
-		setSearch(value);
-	}, [value]);
 	return (
 		<div className='search'>
 			<Form onSubmit={handleSubmit}>

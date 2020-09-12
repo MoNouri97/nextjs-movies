@@ -23,6 +23,7 @@ export default function Home() {
 	const [rating, setRating] = useState([5, 10]);
 	const [sort, setSort] = useState('popularity.desc');
 	const [search, setSearch] = useState('');
+	const [activeTab, setActiveTab] = useState(0);
 
 	const handleGenreChange = (clickedGenre: number) => {
 		if (genres.indexOf(clickedGenre) > -1)
@@ -79,7 +80,15 @@ export default function Home() {
 			),
 		},
 	];
+	const setActiveTabByName = (tab: string) => {
+		for (let idx = 0; idx < panes.length; idx++) {
+			if (panes[idx].menuItem == tab) {
+				setActiveTab(idx);
 
+				break;
+			}
+		}
+	};
 	return (
 		<div className={styles.container}>
 			<Head>
@@ -93,12 +102,19 @@ export default function Home() {
 				<div className='filters'>
 					<RatingFilter rating={rating} onChange={handleRatingChange} />
 					<SortBy sort={sort} onChange={handleSortChange} />
-					<MoviesSearch setSearch={setSearch} />
+					<MoviesSearch
+						setSearch={setSearch}
+						setActiveTab={setActiveTabByName}
+					/>
 				</div>
 				<Pagination {...{ setPage, page }} totalPages={totalPages} />
 				<hr />
 
 				<Tab
+					activeIndex={activeTab}
+					onTabChange={(_, { activeIndex }) =>
+						setActiveTab(parseInt(activeIndex.toString()))
+					}
 					menu={{ secondary: true, pointing: true }}
 					style={{ width: '100%' }}
 					panes={panes}
