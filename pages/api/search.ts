@@ -10,11 +10,10 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
 	try {
 		const data = await fetch(`${endpoint}${makeQueryString(req.query)}`);
 		const json = (await data.json()) as { results: Movie[] };
-
+		json.results = json.results.sort((a, b) => b.popularity - a.popularity);
 		const results = req.query.full
 			? json
 			: json.results
-					.sort((a, b) => b.popularity - a.popularity)
 					.slice(0, 3)
 					.map(({ title, poster_path, id, release_date }: Movie) => ({
 						title,
