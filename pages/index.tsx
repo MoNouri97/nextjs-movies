@@ -8,9 +8,10 @@ import RatingFilter from '../components/RatingFilter';
 import Pagination from '../components/Pagination';
 import MovieInfo from '../components/MovieInfo';
 import SortBy from '../components/SortBy';
-import { Tab } from 'semantic-ui-react';
+import { Search, Tab } from 'semantic-ui-react';
 import MoviesGrid from '../components/MoviesGrid';
 import SanityPicksGrid from '../components/SanityPicksGrid';
+import MoviesSearch from '../components/MoviesSearch';
 
 Modal.setAppElement('#__next');
 
@@ -79,12 +80,13 @@ export default function Home() {
 				<GenresList onChange={handleGenreChange} active={genres} />
 				<div className='filters'>
 					<RatingFilter rating={rating} onChange={handleRatingChange} />
+					<MoviesSearch />
 					<SortBy sort={sort} onChange={handleSortChange} />
 				</div>
 				<Pagination {...{ setPage, page }} totalPages={totalPages} />
 				<hr />
 				<Tab
-					menu={{ pointing: true }}
+					menu={{ secondary: true, pointing: true }}
 					style={{ width: '100%' }}
 					panes={panes}
 				/>

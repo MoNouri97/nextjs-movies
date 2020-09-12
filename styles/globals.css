@@ -27,6 +27,10 @@ a {
 	--dark: var(--rich-black-fogra-29);
 	--light: var(--baby-powder);
 }
+.listImage {
+	width: 80px !important;
+	height: 100px !important;
+}
 
 .grid {
 	position: relative;
@@ -60,6 +64,9 @@ a {
 	justify-content: space-around;
 }
 .sortBy {
+	max-width: 100%;
+}
+.sortByField {
 	width: 200px;
 }
 .ratings {
