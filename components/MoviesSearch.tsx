@@ -1,7 +1,6 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Form, Item, Search } from 'semantic-ui-react';
 import { throttle } from 'lodash';
-import Link from 'next/link';
 import { useRouter } from 'next/router';
 
 const initialState = {
@@ -57,7 +56,10 @@ const fetchSearch = throttle(
 	100,
 );
 
-const MoviesSearch = () => {
+interface Props {
+	setSearch: (str: string) => void;
+}
+const MoviesSearch = ({ setSearch }: Props) => {
 	const [state, dispatch] = React.useReducer(searchReducer, initialState);
 	const { loading, results, value } = state;
 	const router = useRouter();
@@ -70,19 +72,32 @@ const MoviesSearch = () => {
 			}
 			dispatch({ type: 'START_SEARCH', query: data.value });
 
-			const d: [] = await fetchSearch(data.value);
+			const results: [] = await fetchSearch(data.value);
 
 			dispatch({
 				type: 'FINISH_SEARCH',
-				results: d,
+				results,
 			});
 		},
 		[dispatch],
 	);
-	const handleSubmit = React.useCallback((e, data) => {
-		console.log(`submitted`);
-		console.log({ value });
-	}, []);
+	const handleResultSelect = React.useCallback(
+		(_e, { result: { title, tmdbId } }) => {
+			router.push(`/?movie=${tmdbId}`, `/movie/${tmdbId}`);
+			return dispatch({
+				type: 'UPDATE_SELECTION',
+				selection: title,
+			});
+		},
+		[dispatch, router],
+	);
+	const handleSubmit = React.useCallback(() => {
+		setSearch(value);
+	}, [setSearch, value]);
+
+	useEffect(() => {
+		setSearch(value);
+	}, [value]);
 	return (
 		<div className='search'>
 			<Form onSubmit={handleSubmit}>
@@ -90,14 +105,9 @@ const MoviesSearch = () => {
 					<Form.Field>
 						<label>Search :</label>
 						<Search
+							minCharacters={3}
 							loading={loading}
-							onResultSelect={(e, { result: { title, tmdbId } }) => {
-								router.push(`/?movie=${tmdbId}`, `/movie/${tmdbId}`);
-								return dispatch({
-									type: 'UPDATE_SELECTION',
-									selection: title,
-								});
-							}}
+							onResultSelect={handleResultSelect}
 							onSearchChange={handleSearchChange}
 							results={results}
 							value={value}

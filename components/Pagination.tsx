@@ -25,22 +25,22 @@ const Pagination = ({ setPage, page, totalPages }: Props) => {
 				firstItem={{
 					content: <Icon name='angle double left' />,
 					icon: true,
-					disabled: page == 1,
+					disabled: page <= 1,
 				}}
 				lastItem={{
 					content: <Icon name='angle double right' />,
 					icon: true,
-					disabled: page == totalPages,
+					disabled: page >= totalPages,
 				}}
 				prevItem={{
 					content: <Icon name='angle left' />,
 					icon: true,
-					disabled: page == 1,
+					disabled: page <= 1,
 				}}
 				nextItem={{
 					content: <Icon name='angle right' />,
 					icon: true,
-					disabled: page == totalPages,
+					disabled: page >= totalPages,
 				}}
 			/>
 		</div>

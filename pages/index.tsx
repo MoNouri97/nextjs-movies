@@ -8,10 +8,11 @@ import RatingFilter from '../components/RatingFilter';
 import Pagination from '../components/Pagination';
 import MovieInfo from '../components/MovieInfo';
 import SortBy from '../components/SortBy';
-import { Search, Tab } from 'semantic-ui-react';
+import { Tab } from 'semantic-ui-react';
 import MoviesGrid from '../components/MoviesGrid';
 import SanityPicksGrid from '../components/SanityPicksGrid';
 import MoviesSearch from '../components/MoviesSearch';
+import MoviesSearchResults from '../components/MoviesSearchResults';
 
 Modal.setAppElement('#__next');
 
@@ -21,6 +22,7 @@ export default function Home() {
 	const [genres, setGenres] = useState<number[]>([16]);
 	const [rating, setRating] = useState([5, 10]);
 	const [sort, setSort] = useState('popularity.desc');
+	const [search, setSearch] = useState('');
 
 	const handleGenreChange = (clickedGenre: number) => {
 		if (genres.indexOf(clickedGenre) > -1)
@@ -66,6 +68,16 @@ export default function Home() {
 				/>
 			),
 		},
+		{
+			menuItem: 'Search',
+			render: () => (
+				<MoviesSearchResults
+					page={page}
+					setTotalPages={setTotalPages}
+					searchQuery={search}
+				/>
+			),
+		},
 	];
 
 	return (
@@ -80,16 +92,18 @@ export default function Home() {
 				<GenresList onChange={handleGenreChange} active={genres} />
 				<div className='filters'>
 					<RatingFilter rating={rating} onChange={handleRatingChange} />
-					<MoviesSearch />
 					<SortBy sort={sort} onChange={handleSortChange} />
+					<MoviesSearch setSearch={setSearch} />
 				</div>
 				<Pagination {...{ setPage, page }} totalPages={totalPages} />
 				<hr />
+
 				<Tab
 					menu={{ secondary: true, pointing: true }}
 					style={{ width: '100%' }}
 					panes={panes}
 				/>
+
 				<hr />
 				<Pagination {...{ setPage, page }} totalPages={totalPages} />
 			</main>
