@@ -27,11 +27,11 @@ const SortBy = ({ sort, onChange }: Props) => {
 	const handleChange = (e, { value }) => onChange(value);
 
 	return (
-		<div>
+		<div className='sortBy'>
 			<Form>
 				<Form.Group>
 					<Form.Field
-						className='sortBy'
+						className='sortByField'
 						control={Select}
 						onChange={handleChange}
 						value={sort}
