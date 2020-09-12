@@ -12,4 +12,6 @@ export interface Movie {
 	revenue: number;
 	vote_average: number;
 	imdb_id: string;
+	popularity: number;
+	[property: string]: any;
 }
