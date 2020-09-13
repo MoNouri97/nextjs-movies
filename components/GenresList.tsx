@@ -12,7 +12,9 @@ interface Prop {
 	active: number[];
 }
 export const GenresList = ({ onChange, active }: Prop) => {
-	const { data, status } = useQuery(['genres'], fetchGenres);
+	const { data, status } = useQuery(['genres'], fetchGenres, {
+		staleTime: Infinity,
+	});
 	return (
 		<div className='genres'>
 			{status === 'success' &&

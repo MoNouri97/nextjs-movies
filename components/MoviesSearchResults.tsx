@@ -26,6 +26,9 @@ const MoviesSearchResults = ({ searchQuery, page, setTotalPages }: Props) => {
 	const { resolvedData, latestData, status } = usePaginatedQuery(
 		['search', searchQuery, page],
 		fetchSearch,
+		{
+			staleTime: Infinity,
+		},
 	);
 	let results = [];
 	if (status === 'success') {

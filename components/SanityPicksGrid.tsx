@@ -27,6 +27,9 @@ const SanityPicksGrid = ({
 	const { resolvedData, latestData, status } = usePaginatedQuery(
 		[picks, page, genres, rating, sort],
 		fetchSanity,
+		{
+			staleTime: Infinity,
+		},
 	);
 	let results;
 

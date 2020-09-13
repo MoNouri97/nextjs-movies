@@ -34,6 +34,9 @@ const MoviesGrid = ({ setTotalPages, page, genres, rating, sort }: Props) => {
 	const { resolvedData, latestData, status } = usePaginatedQuery(
 		['movies', page, genres, rating, sort],
 		fetchMovies,
+		{
+			staleTime: Infinity,
+		},
 	);
 
 	let results = [];

@@ -9,10 +9,13 @@ import formatDate from '../helpers/formatDate';
 const MovieInfo = () => {
 	const router = useRouter();
 
-	const { data } = useQuery(['movie', router.query], fetchMovie);
+	const { data } = useQuery(['movie', router.query], fetchMovie, {
+		staleTime: Infinity,
+	});
 	const movie: Movie = data;
 	const { data: omdbData } = useQuery(['omdb', movie?.imdb_id], fetchOmdb, {
 		enabled: movie,
+		staleTime: Infinity,
 	});
 	return (
 		<div className={styles.main}>
