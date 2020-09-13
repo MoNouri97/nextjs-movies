@@ -25,75 +25,76 @@ const MovieInfo = () => {
 					router.push('/');
 				}}
 			/>
-			{movie && (
-				<>
-					<div className={styles.poster}>
-						{movie.poster_path && (
-							<img
-								alt='poster'
-								src={`https://image.tmdb.org/t/p/w400/${movie.poster_path}`}
-							/>
-						)}
-						{!movie.poster_path && (
-							<div className={styles.noimage}>no poster available</div>
-						)}
+			<>
+				<div className={styles.poster}>
+					{movie?.poster_path && (
+						<img
+							alt='poster'
+							src={`https://image.tmdb.org/t/p/w400/${movie?.poster_path}`}
+						/>
+					)}
+					{!movie?.poster_path && (
+						<div className={styles.noimage}>
+							{movie ? 'no poster available' : 'Loading ...'}
+						</div>
+					)}
+				</div>
+				<div className={styles.info}>
+					<div className={styles.title + ' ' + styles.wide}>{movie?.title}</div>
+					<div className={styles.desc + ' ' + styles.wide}>
+						{movie?.tagline}
+						<span>{movie?.overview}</span>
 					</div>
-					<div className={styles.info}>
-						<div className={styles.title + ' ' + styles.wide}>
-							{movie.title}
-						</div>
-						<div className={styles.desc + ' ' + styles.wide}>
-							{movie.tagline}
-							<span>{movie.overview}</span>
-						</div>
-						<div className={styles.genres + ' ' + styles.wide}>
-							genres list
-							<ul>
-								{movie.genres &&
-									movie.genres.map(g => <Label key={g.id}>{g.name}</Label>)}
-							</ul>
-						</div>
-						<div>
-							release date
-							<span>{formatDate(movie.release_date)}</span>
-						</div>
-						<div>
-							{/* adding s for more than one director */}
-							Director{movie.director.length > 1 ? 's' : ''}
-							<span>
-								{movie.director.map((d, i) => (
-									<span key={d.name}>
-										{d.name}
-										{i + 1 != movie.director.length ? ',' : ''}
-									</span>
-								))}
-							</span>
-						</div>
-						<div>
-							Votes Average
-							<span>{movie.vote_average} /10</span>
-						</div>
-						{omdbData ? (
-							<div>
-								Imdb Rating
-								<span>{omdbData.imdbRating} /10</span>
-							</div>
-						) : (
-							<div></div>
-						)}
-						{movie.budget && movie.budget != 0 ? (
-							<div>
-								budget<span>{currencyFormat(movie.budget)}</span>
-							</div>
-						) : null}
-						{movie.revenue && movie.revenue != 0 ? (
-							<div>
-								box office<span>{currencyFormat(movie.revenue)}</span>
-							</div>
-						) : null}
+					<div className={styles.genres + ' ' + styles.wide}>
+						genres list
+						<ul>
+							{movie?.genres &&
+								movie?.genres.map(g => <Label key={g.id}>{g.name}</Label>)}
+						</ul>
 					</div>
-				</>
-			)}
+					<div>
+						release date
+						<span>{formatDate(movie?.release_date)}</span>
+					</div>
+					<div>
+						{/* adding s for more than one director */}
+						Director{movie?.director.length > 1 ? 's' : ''}
+						<span>
+							{movie?.director.map((d, i) => (
+								<span key={d.name}>
+									{d.name}
+									{i + 1 != movie.director.length ? ',' : ''}
+								</span>
+							))}
+						</span>
+					</div>
+					<div>
+						Votes Average
+						<span>
+							{movie?.vote_average} /10{' '}
+							<small>(votes:{movie?.vote_count} )</small>{' '}
+						</span>
+					</div>
+					{omdbData ? (
+						<div>
+							Imdb Rating
+							<span>{omdbData.imdbRating} /10</span>
+						</div>
+					) : (
+						<div></div>
+					)}
+					{movie?.budget && movie?.budget != 0 ? (
+						<div>
+							budget<span>{currencyFormat(movie.budget)}</span>
+						</div>
+					) : null}
+					{movie?.revenue && movie?.revenue != 0 ? (
+						<div>
+							box office<span>{currencyFormat(movie.revenue)}</span>
+						</div>
+					) : null}
+				</div>
+			</>
 		</div>
 	);
 };
