@@ -50,7 +50,7 @@ describe('All Filters ', () => {
 
 	describe('GenreList Component', () => {
 		const onChange = jest.fn();
-		const active = ['1', '2'];
+		const active = [1, 2];
 		let res: Response;
 		global.fetch = jest.fn(() =>
 			Promise.resolve({
@@ -58,9 +58,9 @@ describe('All Filters ', () => {
 				json: () =>
 					Promise.resolve({
 						genres: [
-							{ id: '1', name: 'Genre1' },
-							{ id: '2', name: 'Genre2' },
-							{ id: '3', name: 'Genre3' },
+							{ id: 1, name: 'Genre1' },
+							{ id: 2, name: 'Genre2' },
+							{ id: 3, name: 'Genre3' },
 						],
 					}),
 			}),
@@ -88,41 +88,34 @@ describe('All Filters ', () => {
 			expect(firstGenre.classList).toContain('active');
 			fireEvent.click(secondGenre);
 			expect(onChange).toBeCalledTimes(1);
-			expect(onChange).toBeCalledWith('2');
+			expect(onChange).toBeCalledWith(2);
 		});
 	});
-	// describe('RatingFilter Component', () => {
-	// 	const onChange = jest.fn();
-	// 	const rating = [5, 10];
+	describe('RatingFilter Component', () => {
+		const onChange = jest.fn();
+		const rating = [5, 9];
 
-	// 	it('Ratings are rendered as expected', async () => {
-	// 		await act(async () => {
-	// 			render(<RatingFilter {...{ onChange, rating }} />);
-	// 		});
+		//vars
+		let min: HTMLElement, max: HTMLElement;
 
-	// 		const { getByText, debug } = screen;
-	// 		const rating50Btn = getByText('50');
-	// 		const rating80Btn = getByText('80');
-	// 		const rating30Btn = getByText('30');
-	// 		expect(rating50Btn).toBeVisible();
-	// 		expect(rating80Btn).toBeVisible();
-	// 		expect(rating30Btn).toBeVisible();
-	// 	});
-	// 	it('Can change rating', async () => {
-	// 		await act(async () => {
-	// 			render(<RatingFilter {...{ onChange, rating }} />);
-	// 		});
+		beforeEach(async () => {
+			await act(async () => {
+				render(<RatingFilter {...{ onChange, rating }} />);
+			});
 
-	// 		const { getByText, debug } = screen;
-	// 		const rating50Btn = getByText('50');
-	// 		const rating80Btn = getByText('80');
-	// 		const rating30Btn = getByText('30');
-	// 		expect(rating50Btn.classList).toContain('active');
-	// 		expect(rating80Btn.classList).toContain('active');
-	// 		expect(rating30Btn.classList).not.toContain('active');
-	// 		fireEvent.click(rating80Btn);
-	// 		expect(onChange).toBeCalledTimes(1);
-	// 		expect(onChange).toBeCalledWith('8');
-	// 	});
-	// });
+			const { debug, getAllByRole } = screen;
+			debug();
+			[min, max] = getAllByRole('slider');
+		});
+
+		it('Ratings are rendered as expected', async () => {
+			expect(min.getAttribute('aria-valuenow')).toBe('5');
+			expect(min.getAttribute('aria-valuemin')).toBe('0');
+			expect(min.getAttribute('aria-valuemax')).toBe('9');
+
+			expect(max.getAttribute('aria-valuenow')).toBe('9');
+			expect(max.getAttribute('aria-valuemin')).toBe('5');
+			expect(max.getAttribute('aria-valuemax')).toBe('10');
+		});
+	});
 });
