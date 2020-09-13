@@ -49,7 +49,8 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
 
 		return res.json(results);
 	} catch (error) {
-		res.statusCode = error.code | 500;
-		return res.json({ error: true, message: error ? error : 'Server Error' });
+		res.statusCode = error.code || 500;
+		const message = error.message || 'Server Error';
+		res.json({ error: true, message });
 	}
 };

@@ -8,11 +8,13 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
 	try {
 		const data = await fetch(OMDB);
 		const json = await data.json();
-
 		res.statusCode = 200;
 		res.json(json);
 	} catch (error) {
-		res.statusCode = error.code | 500;
-		res.json({ error: true, message: error.message });
+		console.log(error);
+
+		res.statusCode = error.code || 500;
+		const message = error.message || 'Server Error';
+		res.json({ error: true, message });
 	}
 };
