@@ -49,14 +49,14 @@ const MovieInfo = () => {
 						<span>{movie?.overview}</span>
 					</div>
 					<div className={styles.genres + ' ' + styles.wide}>
-						genre{movie?.genres.length > 1 ? 's' : ''}
+						Genre{movie?.genres.length > 1 ? 's' : ''}
 						<ul>
 							{movie?.genres &&
 								movie?.genres.map(g => <Label key={g.id}>{g.name}</Label>)}
 						</ul>
 					</div>
 					<div>
-						release date
+						Release date
 						<span>{formatDate(movie?.release_date)}</span>
 					</div>
 					<div>
@@ -72,7 +72,7 @@ const MovieInfo = () => {
 						</span>
 					</div>
 					<div>
-						Votes Average
+						Votes average
 						<span>
 							{movie?.vote_average} /10{' '}
 							<small>(votes:{movie?.vote_count} )</small>{' '}
@@ -80,7 +80,7 @@ const MovieInfo = () => {
 					</div>
 					{omdbData ? (
 						<div>
-							Imdb Rating
+							Imdb rating
 							<span>{omdbData.imdbRating} /10</span>
 						</div>
 					) : (
@@ -93,7 +93,7 @@ const MovieInfo = () => {
 					) : null}
 					{movie?.revenue && movie?.revenue != 0 ? (
 						<div>
-							box office<span>{currencyFormat(movie.revenue)}</span>
+							Box office<span>{currencyFormat(movie.revenue)}</span>
 						</div>
 					) : null}
 				</div>

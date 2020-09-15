@@ -32,7 +32,7 @@
 	border-radius: 10px;
 	overflow: auto;
 	overscroll-behavior: contain;
-	background: rgba(255, 255, 255, 0.828);
+	background: #eeeeee;
 }
 .poster {
 	flex-grow: 1;
@@ -60,8 +60,7 @@
 .info {
 	background-repeat: no-repeat;
 	background-size: cover;
-	padding: 2rem 1rem;
-	margin-left: 0.1rem;
+	padding: 2rem 2rem;
 	flex-grow: 1;
 	flex-basis: 60%;
 	display: grid;
@@ -74,7 +73,7 @@
 .info > div {
 	font-family: 'Lato';
 	/* font-size: 1.2rem; */
-	text-transform: capitalize;
+	text-transform: none;
 	font-size: large;
 	font-weight: 900;
 	color: var(--tiffany-blue);
