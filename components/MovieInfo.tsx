@@ -49,7 +49,7 @@ const MovieInfo = () => {
 						<span>{movie?.overview}</span>
 					</div>
 					<div className={styles.genres + ' ' + styles.wide}>
-						genres list
+						genre{movie?.genres.length > 1 ? 's' : ''}
 						<ul>
 							{movie?.genres &&
 								movie?.genres.map(g => <Label key={g.id}>{g.name}</Label>)}

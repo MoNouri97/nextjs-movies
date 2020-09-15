@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { Form, Item, Search } from 'semantic-ui-react';
 import { throttle } from 'lodash';
 import { useRouter } from 'next/router';
