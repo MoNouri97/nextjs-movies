@@ -70,10 +70,17 @@
 .wide {
 	grid-column: span 2 / auto;
 }
-.info > div {
+.tagline {
+	text-transform: lowercase;
+	margin: 0;
+}
+.tagline::first-letter {
+	text-transform: uppercase;
+}
+.info > div,
+.tagline {
 	font-family: 'Lato';
 	/* font-size: 1.2rem; */
-	text-transform: none;
 	font-size: large;
 	font-weight: 900;
 	color: var(--tiffany-blue);

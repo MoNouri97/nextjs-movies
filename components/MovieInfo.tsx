@@ -45,7 +45,8 @@ const MovieInfo = () => {
 				<div className={styles.info}>
 					<div className={styles.title + ' ' + styles.wide}>{movie?.title}</div>
 					<div className={styles.desc + ' ' + styles.wide}>
-						{movie?.tagline}
+						<p className={styles.tagline}>{movie?.tagline}</p>
+
 						<span>{movie?.overview}</span>
 					</div>
 					<div className={styles.genres + ' ' + styles.wide}>
