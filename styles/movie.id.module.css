@@ -48,7 +48,7 @@
 }
 .noimage {
 	background: transparent;
-	text-transform: capitalize;
+	text-transform: uppercase;
 	font-size: x-large;
 	color: var(--dark);
 	font-weight: 100;
@@ -74,14 +74,15 @@
 .info > div {
 	font-family: 'Lato';
 	/* font-size: 1.2rem; */
+	text-transform: capitalize;
 	font-size: large;
 	font-weight: 900;
-	text-transform: capitalize;
 	color: var(--tiffany-blue);
 	line-height: 1.2em;
 }
 .info div span {
 	color: var(--dark);
+	text-transform: none;
 	display: block;
 	margin-top: 0.5rem;
 }
