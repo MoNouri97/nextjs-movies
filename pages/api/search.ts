@@ -31,6 +31,7 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
 			// default sort by popularity
 			return b.popularity - a.popularity;
 		});
+
 		const results = req.query.full
 			? json
 			: json.results
@@ -41,7 +42,7 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
 						 * it is used as the key and not accessible (resultRenderer in MoviesSearch) */
 						id,
 						tmdbId: id,
-						date: formatDate(release_date),
+						release_date: formatDate(release_date),
 						image: tmdbImage(poster_path, '200'),
 					}));
 

@@ -41,6 +41,10 @@ export default function Home() {
 		setSort(newSort);
 		setPage(1);
 	};
+	const handleSearchSubmit = (value: string) => {
+		setActiveTab(2); // Search pane
+		setSearch(value);
+	};
 
 	const router = useRouter();
 	const panes = [
@@ -102,10 +106,7 @@ export default function Home() {
 				<div className='filters'>
 					<RatingFilter rating={rating} onChange={handleRatingChange} />
 					<SortBy sort={sort} onChange={handleSortChange} />
-					<MoviesSearch
-						setSearch={setSearch}
-						setActiveTab={setActiveTabByName}
-					/>
+					<MoviesSearch handleSearchSubmit={handleSearchSubmit} />
 				</div>
 				<Pagination {...{ setPage, page }} totalPages={totalPages} />
 				<hr />
