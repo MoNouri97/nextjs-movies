@@ -104,7 +104,6 @@ describe('All Filters ', () => {
 			});
 
 			const { debug, getAllByRole } = screen;
-			debug();
 			[min, max] = getAllByRole('slider');
 		});
 

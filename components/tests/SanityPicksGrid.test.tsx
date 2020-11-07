@@ -8,7 +8,9 @@ import * as sanity from '../../lib/sanity';
 describe('SanityPicksGrid Component', () => {
 	const fetchQueryMock = jest
 		.spyOn(sanity, 'fetchQuery')
-		.mockImplementation(() => Promise.resolve([MovieMock]));
+		.mockImplementation(() =>
+			Promise.resolve({ data: [MovieMock], total_results: '1' }),
+		);
 	beforeEach(() => {
 		fetchQueryMock.mockClear();
 	});
@@ -25,12 +27,20 @@ describe('SanityPicksGrid Component', () => {
 			render(<SanityPicksGrid {...props} picks='gold' />);
 		});
 		const { debug, queryByText } = screen;
-		// debug();
 		expect(fetchQueryMock).toBeCalledTimes(1);
-		expect(fetchQueryMock).toHaveBeenCalledWith(
-			`*[ _type == "movie" && genres[].id==${props.genres[0]} && vote_average>${props.rating[0]} && vote_average<${props.rating[1]} ] [0...40] | order(${props.sort})`,
-		);
 
+		// query
+		const formattedGenres = `genres[].id==${props.genres[0]}`;
+		const constraints = `_type == "movie" ${
+			formattedGenres ? `&& ${formattedGenres} ` : ''
+		}&& vote_average>${props.rating[0]} && vote_average<${props.rating[1]}`;
+
+		// spacing is like this to match the query exactly
+		const query = /* groq */ `{
+		"data" : *[ ${constraints} ] [0...40] | order(${props.sort.replace('.', ' ')}),
+		"total_results": count(*[ ${constraints} ])
+	}`;
+		expect(fetchQueryMock).toHaveBeenCalledWith(query);
 		expect(queryByText(MovieMock.title)).toBeTruthy();
 		expect(props.setTotalPages).toBeCalledTimes(1);
 		expect(props.setTotalPages).toHaveBeenCalledWith(1);
@@ -50,9 +60,18 @@ describe('SanityPicksGrid Component', () => {
 		const { debug, queryByText } = screen;
 		// debug();
 		expect(fetchQueryMock).toBeCalledTimes(1);
-		expect(fetchQueryMock).toHaveBeenCalledWith(
-			`*[ _type == "movie" && genres[].id==${props.genres[0]} || genres[].id==${props.genres[1]} && vote_average>${props.rating[0]} && vote_average<${props.rating[1]} ] [0...40] | order(${props.sort})`,
-		);
+		// query
+		const formattedGenres = `genres[].id==${props.genres[0]} || genres[].id==${props.genres[1]}`;
+		const constraints = `_type == "movie" ${
+			formattedGenres ? `&& ${formattedGenres} ` : ''
+		}&& vote_average>${props.rating[0]} && vote_average<${props.rating[1]}`;
+
+		// spacing is like this to match the query exactly
+		const query = /* groq */ `{
+		"data" : *[ ${constraints} ] [0...40] | order(${props.sort.replace('.', ' ')}),
+		"total_results": count(*[ ${constraints} ])
+	}`;
+		expect(fetchQueryMock).toHaveBeenCalledWith(query);
 	});
 	it('Renders the the movie list as expected (0 genres)', async () => {
 		const props = {
@@ -68,8 +87,17 @@ describe('SanityPicksGrid Component', () => {
 		const { debug, queryByText } = screen;
 		// debug();
 		expect(fetchQueryMock).toBeCalledTimes(1);
-		expect(fetchQueryMock).toHaveBeenCalledWith(
-			`*[ _type == "movie" && vote_average>${props.rating[0]} && vote_average<${props.rating[1]} ] [0...40] | order(${props.sort})`,
-		);
+		// query
+		const formattedGenres = ``;
+		const constraints = `_type == "movie" ${
+			formattedGenres ? `&& ${formattedGenres} ` : ''
+		}&& vote_average>${props.rating[0]} && vote_average<${props.rating[1]}`;
+
+		// spacing is like this to match the query exactly
+		const query = /* groq */ `{
+		"data" : *[ ${constraints} ] [0...40] | order(${props.sort.replace('.', ' ')}),
+		"total_results": count(*[ ${constraints} ])
+	}`;
+		expect(fetchQueryMock).toHaveBeenCalledWith(query);
 	});
 });
