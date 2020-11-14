@@ -1,6 +1,6 @@
 import Head from 'next/head';
 import styles from '../styles/Home.module.css';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import Modal from 'react-modal';
 import { useRouter } from 'next/router';
 import { GenresList } from '../components/GenresList';
@@ -13,6 +13,7 @@ import MoviesGrid from '../components/MoviesGrid';
 import SanityPicksGrid from '../components/SanityPicksGrid';
 import MoviesSearch from '../components/MoviesSearch';
 import MoviesSearchResults from '../components/MoviesSearchResults';
+import WatchedList from '../components/WatchedList';
 
 Modal.setAppElement('#__next');
 
@@ -24,7 +25,14 @@ export default function Home() {
 	const [sort, setSort] = useState('popularity.desc');
 	const [search, setSearch] = useState('');
 	const [activeTab, setActiveTab] = useState(0);
+	const [watched, setWatched] = useState([]);
+	useEffect(() => {
+		if (watched.length) localStorage.setItem('movies', JSON.stringify(watched));
+	}, [watched]);
 
+	useEffect(() => {
+		setWatched(JSON.parse(localStorage.getItem('movies')));
+	}, []);
 	const handleGenreChange = (clickedGenre: number) => {
 		if (genres.indexOf(clickedGenre) > -1)
 			return setGenres(genres.filter(value => value != clickedGenre));
@@ -57,6 +65,7 @@ export default function Home() {
 					rating={rating}
 					sort={sort}
 					setTotalPages={setTotalPages}
+					watched={watched}
 				/>
 			),
 		},
@@ -82,6 +91,13 @@ export default function Home() {
 					searchQuery={search}
 				/>
 			),
+		},
+		{
+			menuItem: 'Watched',
+			render: () => {
+				setTotalPages(0);
+				return <WatchedList list={watched} setList={setWatched} />;
+			},
 		},
 	];
 	const setActiveTabByName = (tab: string) => {

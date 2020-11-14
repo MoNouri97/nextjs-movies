@@ -35,6 +35,10 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
 		const results = req.query.full
 			? json
 			: json.results
+					.filter(movie => {
+						const query = (req.query.query as string).toLowerCase();
+						return movie.title.toLowerCase().indexOf(query) === 0;
+					})
 					.slice(0, 3)
 					.map(({ title, poster_path, id, release_date }: Movie) => ({
 						title,

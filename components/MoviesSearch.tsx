@@ -1,8 +1,9 @@
 import React, { useCallback } from 'react';
-import { Form, Item, Search } from 'semantic-ui-react';
+import { Form, InputProps, Item, Search } from 'semantic-ui-react';
 import { debounce, throttle } from 'lodash';
 import { useRouter } from 'next/router';
 import { time } from 'console';
+import { SemanticShorthandItem } from 'semantic-ui-react/dist/commonjs/generic';
 
 const initialState = {
 	loading: false,
@@ -68,11 +69,13 @@ interface Props {
 		image: string;
 	}) => void;
 	fluid?: boolean;
+	input?: SemanticShorthandItem<InputProps>;
 }
 const MoviesSearch = ({
 	handleSearchSubmit,
 	handleSelect,
 	fluid = false,
+	input,
 }: Props) => {
 	const [{ loading, results, value }, dispatch] = React.useReducer(
 		searchReducer,
@@ -82,14 +85,9 @@ const MoviesSearch = ({
 	const router = useRouter();
 	const searchFetch = useCallback(
 		async (query: string) => {
-			console.log('fetching ' + query);
-
 			const newResults = await (
 				await fetch(`api/search?query=${query}`)
 			).json();
-			console.log({ newResults });
-
-			console.log('done fetching ');
 
 			dispatch({
 				type: 'FINISH_SEARCH',
@@ -136,6 +134,7 @@ const MoviesSearch = ({
 	const style: React.CSSProperties = {
 		width: fluid ? '100%' : '',
 	};
+
 	return (
 		<div className='search' style={style}>
 			<Form onSubmit={handleSubmit}>
@@ -143,6 +142,7 @@ const MoviesSearch = ({
 					<Form.Field style={style}>
 						<label>Search :</label>
 						<Search
+							input={input}
 							fluid
 							minCharacters={3}
 							loading={loading}

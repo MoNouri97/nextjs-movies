@@ -1,5 +1,6 @@
 import React from 'react';
 import { usePaginatedQuery } from 'react-query';
+import { Movie } from '../types/Movie';
 import Card from './Card';
 
 const fetchMovies = async (
@@ -28,9 +29,17 @@ interface Props {
 	rating: number[];
 	sort: string;
 	setTotalPages: (number) => void;
+	watched: any[];
 }
 
-const MoviesGrid = ({ setTotalPages, page, genres, rating, sort }: Props) => {
+const MoviesGrid = ({
+	setTotalPages,
+	page,
+	genres,
+	rating,
+	sort,
+	watched,
+}: Props) => {
 	const { resolvedData, latestData, status } = usePaginatedQuery(
 		['movies', page, genres, rating, sort],
 		fetchMovies,
@@ -38,11 +47,21 @@ const MoviesGrid = ({ setTotalPages, page, genres, rating, sort }: Props) => {
 			staleTime: Infinity,
 		},
 	);
+	const isWatched = (movie: Movie) => {
+		for (const w of watched) {
+			if (movie.id == w.tmdbId) {
+				console.log(movie);
 
+				return true;
+			}
+		}
+		return false;
+	};
 	let results = [];
 
 	if (status === 'success') {
 		results = resolvedData.results;
+		results = results.filter((movie: Movie) => !isWatched(movie));
 		setTotalPages(resolvedData.total_pages);
 	}
 	return <CardsGrid {...{ resolvedData, latestData, results }} />;
