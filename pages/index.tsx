@@ -14,16 +14,31 @@ import SanityPicksGrid from '../components/SanityPicksGrid';
 import MoviesSearch from '../components/MoviesSearch';
 import MoviesSearchResults from '../components/MoviesSearchResults';
 import WatchedList from '../components/WatchedList';
+import { useFilters } from '../helpers/useFilters';
 
 Modal.setAppElement('#__next');
 
 export default function Home() {
-	const [page, setPage] = useState(1);
-	const [totalPages, setTotalPages] = useState(500);
-	const [genres, setGenres] = useState<number[]>([16]);
-	const [rating, setRating] = useState([5, 10]);
-	const [sort, setSort] = useState('popularity.desc');
-	const [search, setSearch] = useState('');
+	// const [page, setPage] = useState(1);
+	// const [totalPages, setTotalPages] = useState(500);
+	// const [genres, setGenres] = useState<number[]>([16]);
+	// const [rating, setRating] = useState([5, 10]);
+	// const [sort, setSort] = useState('popularity.desc');
+	// const [search, setSearch] = useState('');
+	const {
+		page,
+		setPage,
+		totalPages,
+		setTotalPages,
+		genres,
+		setGenres,
+		rating,
+		setRating,
+		sort,
+		setSort,
+		search,
+		setSearch,
+	} = useFilters();
 	const [activeTab, setActiveTab] = useState(0);
 	const [watched, setWatched] = useState([]);
 	useEffect(() => {
