@@ -18,7 +18,7 @@ export const GenresList = ({ onChange, active }: Prop) => {
 	return (
 		<div className='genres'>
 			{status === 'success' &&
-				data.genres.map((genre: Genre) => {
+				data?.genres?.map((genre: Genre) => {
 					return (
 						<Button
 							className='genre'

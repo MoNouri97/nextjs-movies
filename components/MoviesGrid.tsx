@@ -50,8 +50,6 @@ const MoviesGrid = ({
 	const isWatched = (movie: Movie) => {
 		for (const w of watched) {
 			if (movie.id == w.tmdbId) {
-				console.log(movie);
-
 				return true;
 			}
 		}
@@ -61,7 +59,9 @@ const MoviesGrid = ({
 
 	if (status === 'success') {
 		results = resolvedData.results;
-		results = results.filter((movie: Movie) => !isWatched(movie));
+		if (watched) {
+			results = results.filter((movie: Movie) => !isWatched(movie));
+		}
 		setTotalPages(resolvedData.total_pages);
 	}
 	return <CardsGrid {...{ resolvedData, latestData, results }} />;

@@ -46,7 +46,9 @@ export default function Home() {
 	}, [watched]);
 
 	useEffect(() => {
-		setWatched(JSON.parse(localStorage.getItem('movies')));
+		const initMovies = JSON.parse(localStorage.getItem('movies'));
+		if (!initMovies) return;
+		setWatched(initMovies);
 	}, []);
 	const handleGenreChange = (clickedGenre: number) => {
 		if (genres.indexOf(clickedGenre) > -1)
