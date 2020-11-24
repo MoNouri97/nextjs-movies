@@ -4,4 +4,6 @@ module.exports = {
 		config.externals['styletron-server'] = 'styletron-server';
 		return config;
 	},
+	// netlify -Target must be serverless
+	target: 'serverless',
 };

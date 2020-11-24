@@ -35,3 +35,7 @@ yarn-error.log*
 
 # helpers for dev
 /dev\ helpers
+
+#netlify
+/out_functions/
+/out_publish/
